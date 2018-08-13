@@ -1,8 +1,8 @@
 # Roarr
 
-[![Travis build status](http://img.shields.io/travis/gajus/roarr/master.svg?style=flat-square)](https://travis-ci.org/gajus/roarr)
-[![Coveralls](https://img.shields.io/coveralls/gajus/roarr.svg?style=flat-square)](https://coveralls.io/github/gajus/roarr)
-[![NPM version](http://img.shields.io/npm/v/roarr.svg?style=flat-square)](https://www.npmjs.org/package/roarr)
+[![Travis build status](http://img.shields.io/travis/gajus/roarr-cli/master.svg?style=flat-square)](https://travis-ci.org/gajus/roarr-cli)
+[![Coveralls](https://img.shields.io/coveralls/gajus/roarr-cli.svg?style=flat-square)](https://coveralls.io/github/gajus/roarr-cli)
+[![NPM version](http://img.shields.io/npm/v/@roarr/cli.svg?style=flat-square)](https://www.npmjs.org/package/@roarr/cli)
 [![Canonical Code Style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
 [![Twitter Follow](https://img.shields.io/twitter/follow/kuizinas.svg?style=social&label=Follow)](https://twitter.com/kuizinas)
 
