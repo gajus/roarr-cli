@@ -19,28 +19,28 @@
     "split2": "^3.0.0",
     "through2": "^2.0.3",
     "ulid": "^2.3.0",
-    "yargs": "^12.0.2"
+    "yargs": "^12.0.3-candidate.0"
   },
   "description": "A CLI program for Roarr logger.",
   "devDependencies": {
-    "@babel/cli": "^7.1.0",
-    "@babel/core": "^7.1.0",
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
     "@babel/node": "^7.0.0",
     "@babel/plugin-transform-flow-strip-types": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
-    "ava": "^1.0.0-beta.8",
+    "ava": "^1.0.0-rc.1",
     "babel-plugin-istanbul": "^5.1.0",
     "coveralls": "^3.0.2",
-    "eslint": "^5.6.0",
-    "eslint-config-canonical": "^12.0.0",
-    "flow-bin": "^0.81.0",
+    "eslint": "^5.7.0",
+    "eslint-config-canonical": "^13.0.0",
+    "flow-bin": "^0.83.0",
     "flow-copy-source": "^2.0.2",
-    "husky": "^1.0.1",
-    "nock": "^10.0.0",
+    "husky": "^1.1.2",
+    "nock": "^10.0.1",
     "nyc": "^13.1.0",
-    "semantic-release": "^15.9.16",
-    "sinon": "^6.3.4"
+    "semantic-release": "^15.10.5",
+    "sinon": "^7.0.0"
   },
   "engines": {
     "node": ">=6.0"
