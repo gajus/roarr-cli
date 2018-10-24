@@ -116,7 +116,7 @@ const createLogFormatter = (configuration: LogFormatterConfigurationType) => {
       return formatInvalidInputMessage(error, line);
     }
 
-    return formatMessage(parsedMessage);
+    return formatMessage(configuration, parsedMessage);
   });
 
   return stream;
