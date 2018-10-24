@@ -3,6 +3,9 @@
 import split from 'split2';
 import chalk from 'chalk';
 import prettyjson from 'prettyjson';
+import type {
+  MessageType
+} from 'roarr';
 import {
   isRoarrLine
 } from './utilities';
@@ -41,62 +44,79 @@ const getLogLevelName = (logLevel: number): string => {
   return logLevels[logLevel] || 'INFO';
 };
 
+const formatMessage = (configuration: LogFormatterConfigurationType, message: MessageType): string => {
+  let formattedMessage = '';
+
+  formattedMessage = '[' + new Date(message.time).toISOString() + ']';
+
+  if (message.context.logLevel && typeof message.context.logLevel === 'number') {
+    const logLevelName = getLogLevelName(message.context.logLevel);
+
+    const logLevelColorName = logLevelColorMap[logLevelName];
+
+    if (!logLevelColorName) {
+      throw new Error('Unexpected state.');
+    }
+
+    formattedMessage += ' ' + logLevelColorName(logLevelName + ' (' + message.context.logLevel + ')');
+  }
+
+  if (message.context.package) {
+    formattedMessage += ' (@' + message.context.package + ')';
+  }
+
+  if (message.context.namespace) {
+    formattedMessage += ' (#' + message.context.namespace + ')';
+  }
+
+  formattedMessage += ': ' + message.message + '\n';
+
+  if (configuration.includeContext && message.context) {
+    /* eslint-disable no-unused-vars */
+    const {
+      application: tmp0,
+      hostname: tmp1,
+      instanceId: tmp2,
+      logLevel: tmp3,
+      namespace: tmp4,
+      package: tmp5,
+      package: tmp6,
+      ...rest
+    } = message.context;
+
+    /* eslint-enable */
+
+    if (Object.keys(rest).length) {
+      // eslint-disable-next-line no-console
+      formattedMessage += prettyjson.render(rest) + '\n\n';
+    }
+  }
+
+  return formattedMessage;
+};
+
+const formatInvalidInputMessage = (error: Error, input: string): string => {
+  return chalk.red('Cannot parse presumed Roarr log message as JSON [' + error.name + ': ' + error.message + ']') +
+    '\n' + chalk.gray('---INVALID INPUT START---') +
+    '\n' + input +
+    '\n' + chalk.gray('---INVALID INPUT END---');
+};
+
 const createLogFormatter = (configuration: LogFormatterConfigurationType) => {
   const stream = split((line) => {
     if (!isRoarrLine(line)) {
       return configuration.excludeOrphans ? '' : line + '\n';
     }
 
-    const message = JSON.parse(line);
+    let parsedMessage;
 
-    let formattedMessage = '';
-
-    formattedMessage = '[' + new Date(message.time).toISOString() + ']';
-
-    if (message.context.logLevel && typeof message.context.logLevel === 'number') {
-      const logLevelName = getLogLevelName(message.context.logLevel);
-
-      const logLevelColorName = logLevelColorMap[logLevelName];
-
-      if (!logLevelColorName) {
-        throw new Error('Unexpected state.');
-      }
-
-      formattedMessage += ' ' + logLevelColorName(logLevelName + ' (' + message.context.logLevel + ')');
+    try {
+      parsedMessage = JSON.parse(line);
+    } catch (error) {
+      return formatInvalidInputMessage(error, line);
     }
 
-    if (message.context.package) {
-      formattedMessage += ' (@' + message.context.package + ')';
-    }
-
-    if (message.context.namespace) {
-      formattedMessage += ' (#' + message.context.namespace + ')';
-    }
-
-    formattedMessage += ': ' + message.message + '\n';
-
-    if (configuration.includeContext && message.context) {
-      /* eslint-disable no-unused-vars */
-      const {
-        application: tmp0,
-        hostname: tmp1,
-        instanceId: tmp2,
-        logLevel: tmp3,
-        namespace: tmp4,
-        package: tmp5,
-        package: tmp6,
-        ...rest
-      } = message.context;
-
-      /* eslint-enable */
-
-      if (Object.keys(rest).length) {
-        // eslint-disable-next-line no-console
-        formattedMessage += prettyjson.render(rest) + '\n\n';
-      }
-    }
-
-    return formattedMessage;
+    return formatMessage(parsedMessage);
   });
 
   return stream;
