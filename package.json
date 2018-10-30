@@ -33,15 +33,15 @@
     "ava": "^1.0.0-rc.1",
     "babel-plugin-istanbul": "^5.1.0",
     "coveralls": "^3.0.2",
-    "eslint": "^5.7.0",
+    "eslint": "^5.8.0",
     "eslint-config-canonical": "^13.0.0",
-    "flow-bin": "^0.83.0",
+    "flow-bin": "^0.85.0",
     "flow-copy-source": "^2.0.2",
     "husky": "^1.1.2",
     "nock": "^10.0.1",
     "nyc": "^13.1.0",
-    "semantic-release": "^15.10.5",
-    "sinon": "^7.0.0"
+    "semantic-release": "^15.10.6",
+    "sinon": "^7.1.0"
   },
   "engines": {
     "node": ">=6.0"
