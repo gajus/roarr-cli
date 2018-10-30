@@ -58,15 +58,15 @@ const formatMessage = (configuration: LogFormatterConfigurationType, message: Me
       throw new Error('Unexpected state.');
     }
 
-    formattedMessage += ' ' + logLevelColorName(logLevelName + ' (' + message.context.logLevel + ')');
+    formattedMessage += ' ' + logLevelColorName(logLevelName + ' (' + String(message.context.logLevel) + ')');
   }
 
   if (message.context.package) {
-    formattedMessage += ' (@' + message.context.package + ')';
+    formattedMessage += ' (@' + String(message.context.package) + ')';
   }
 
   if (message.context.namespace) {
-    formattedMessage += ' (#' + message.context.namespace + ')';
+    formattedMessage += ' (#' + String(message.context.namespace) + ')';
   }
 
   formattedMessage += ': ' + message.message + '\n';
