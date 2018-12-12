@@ -45,7 +45,7 @@ export const builder = (yargs: Object) => {
     .options({
       'exclude-orphans': {
         default: false,
-        describe: 'Excludes messages that cannot be recognized as Roarr log message.',
+        description: 'Excludes messages that cannot be recognized as Roarr log message.',
         type: 'boolean'
       }
     });
