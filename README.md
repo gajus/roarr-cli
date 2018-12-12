@@ -113,6 +113,5 @@ The `roarr pretty-print` CLI program is using the context property names suggest
 
 |Name|Description|Default|
 |---|---|---|
-|`context`|Print a number of lines leading and trailing context surrounding each match.|2|
 |`exclude-orphans`|Excludes messages that cannot be recognized as Roarr log message.|`false`|
 |`include-context`|Includes message context payload.|`true`|
