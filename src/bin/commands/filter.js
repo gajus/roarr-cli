@@ -21,7 +21,6 @@ type LogFilterConfigurationType = {|
   +jqExpression: string
 |};
 
-let consequentLinePrinted = 0;
 let lastLinePrinterLinesAgo = 0;
 let printNextLines = 0;
 let buffer = [];
@@ -47,7 +46,6 @@ const filterLog = (configuration: LogFilterConfigurationType, line: string, call
       if (data) {
         result = buffer.slice(-1 * lastLinePrinterLinesAgo - 1, -1).join('\n') + '\n' + data + '\n';
 
-        consequentLinePrinted++;
         lastLinePrinterLinesAgo = 0;
         printNextLines = configuration.context;
       } else {
@@ -59,7 +57,6 @@ const filterLog = (configuration: LogFilterConfigurationType, line: string, call
           result = '';
         }
 
-        consequentLinePrinted = 0;
         lastLinePrinterLinesAgo++;
       }
 
