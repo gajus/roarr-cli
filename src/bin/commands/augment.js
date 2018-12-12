@@ -52,10 +52,12 @@ export const builder = (yargs: Object) => {
     .options({
       'append-hostname': {
         default: false,
+        description: 'Includes a hostname.',
         type: 'boolean'
       },
       'append-instance-id': {
         default: false,
+        description: 'Generates and includes a unique instance ID.',
         type: 'boolean'
       },
       'exclude-orphans': {

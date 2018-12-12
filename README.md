@@ -40,11 +40,19 @@ $ echo '{"context":{"package":"raygun","namespace":"createHttpProxyServer","logL
 {"context":{"package":"raygun","namespace":"createOnCloseEventHandler","logLevel":30,"hostname":"curiosity.local","instanceId":"01CM07A7DGAB6YV25396FD772Q"},"message":"internal SSL close","sequence":3,"time":1533310067439,"version":"1.0.0"}
 ```
 
+#### `augment` configuration
+
+|Name|Description|Default|
+|---|---|---|
+|`append-hostname`|Includes a hostname.|`true`|
+|`append-instance-id`|Generates and includes a unique instance ID.|`true`|
+|`exclude-orphans`|Excludes messages that cannot be recognized as Roarr log message.|`false`|
+
 ### `filter` program
 
 Log filtering can be done using a JSON processor such as `jq`. However, `jq` [does make it easy to ignore invalid JSON](https://github.com/stedolan/jq/issues/1547).
 
-Roarr `filter` CLI program filters Roarr JSON messages while passing through all the other content, e.g.
+Roarr `filter` CLI program filters Roarr JSON messages while (optionally) passing through all the other content, e.g.
 
 ```bash
 $ echo '
@@ -61,6 +69,13 @@ foo bar
 {"foo": "bar"}
 
 ```
+
+#### `filter` configuration
+
+|Name|Description|Default|
+|---|---|---|
+|`context`|Print a number of lines leading and trailing context surrounding each match.|2|
+|`exclude-orphans`|Excludes messages that cannot be recognized as Roarr log message.|`false`|
 
 ### `pretty-print` program
 
@@ -93,3 +108,11 @@ Provided that the `index.js` program produced an output such as:
 * `#` prefixed value denotes the namespace.
 
 The `roarr pretty-print` CLI program is using the context property names suggested in the [conventions](#conventions) to pretty-print the logs for the developer inspection purposes.
+
+#### `pretty-print` configuration
+
+|Name|Description|Default|
+|---|---|---|
+|`context`|Print a number of lines leading and trailing context surrounding each match.|2|
+|`exclude-orphans`|Excludes messages that cannot be recognized as Roarr log message.|`false`|
+|`include-context`|Includes message context payload.|`true`|

@@ -136,6 +136,7 @@ export const builder = (yargs: Object) => {
       },
       'include-context': {
         default: true,
+        description: 'Includes message context payload.',
         type: 'boolean'
       }
     });
