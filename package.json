@@ -38,10 +38,8 @@
     "flow-bin": "^0.88.0",
     "flow-copy-source": "^2.0.2",
     "husky": "^1.2.0",
-    "nock": "^10.0.4",
     "nyc": "^13.1.0",
-    "semantic-release": "^15.12.5",
-    "sinon": "^7.2.2"
+    "semantic-release": "^15.12.5"
   },
   "engines": {
     "node": ">=6.0"
