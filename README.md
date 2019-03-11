@@ -62,13 +62,15 @@ $ echo '
 foo bar
 {"foo": "bar"}
 {"context":{"package":"raygun","namespace":"createOnCloseEventHandler","logLevel":30},"message":"internal SSL close","sequence":3,"time":1533310067439,"version":"1.0.0"}
-' | roarr filter 'select(.context.logLevel > 30)' | roarr pretty-print
+' | roarr filter '{"context.logLevel":{gt:30}}' | roarr pretty-print
 [2018-08-03T15:27:47.405Z] WARN (40) (@raygun) (#createHttpProxyServer): internal SSL Server running on 0.0.0.0:59222
 [2018-08-03T15:27:47.438Z] WARN (40) (@raygun) (#createHttpProxyServer): gracefully shutting down the proxy server
 foo bar
 {"foo": "bar"}
 
 ```
+
+Refer to [`searchjs`](https://github.com/deitch/searchjs) for search API documentation.
 
 #### `filter` configuration
 

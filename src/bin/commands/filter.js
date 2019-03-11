@@ -3,8 +3,9 @@
 import split from 'split2';
 import through from 'through2';
 import {
-  run as jq
-} from 'node-jq';
+  matchObject
+} from 'searchjs';
+import JSON5 from 'json5';
 import {
   isRoarrLine
 } from './utilities';
@@ -12,13 +13,14 @@ import {
 type ArgvType = {|
   +context: number,
   +excludeOrphans: boolean,
-  +jqExpression: string
+  +searchExpression: string
 |};
 
 type LogFilterConfigurationType = {|
   +context: number,
   +excludeOrphans: boolean,
-  +jqExpression: string
+  // eslint-disable-next-line flowtype/no-weak-types
+  +searchExpression: Object
 |};
 
 let lastLinePrinterLinesAgo = 0;
@@ -36,38 +38,35 @@ const filterLog = (configuration: LogFilterConfigurationType, line: string, call
 
   buffer = buffer.slice(-1 * configuration.context - 1);
 
-  jq(configuration.jqExpression, line, {
-    input: 'string',
-    output: 'string'
-  })
-    .then((data) => {
-      let result;
+  try {
+    const subject = JSON.parse(line);
 
-      if (data) {
-        result = buffer.slice(-1 * lastLinePrinterLinesAgo - 1, -1).join('\n') + '\n' + data + '\n';
+    let result;
 
-        lastLinePrinterLinesAgo = 0;
-        printNextLines = configuration.context;
+    if (matchObject(subject, configuration.searchExpression)) {
+      result = buffer.slice(-1 * lastLinePrinterLinesAgo - 1, -1).join('\n') + '\n' + line;
+
+      lastLinePrinterLinesAgo = 0;
+      printNextLines = configuration.context;
+    } else {
+      printNextLines--;
+
+      if (printNextLines >= 0) {
+        result = line + '\n';
       } else {
-        printNextLines--;
-
-        if (printNextLines >= 0) {
-          result = line + '\n';
-        } else {
-          result = '';
-        }
-
-        lastLinePrinterLinesAgo++;
+        result = '';
       }
 
-      return callback(undefined, result);
-    })
-    .catch((error) => {
-      return callback(error);
-    });
+      lastLinePrinterLinesAgo++;
+    }
+
+    callback(undefined, result);
+  } catch (error) {
+    callback(error);
+  }
 };
 
-export const command = 'filter <jq-expression>';
+export const command = 'filter <search-expression>';
 export const desc = 'Filter Roarr messages using jq.';
 
 // eslint-disable-next-line flowtype/no-weak-types
@@ -94,7 +93,14 @@ export const handler = (argv: ArgvType) => {
     .pipe(through((chunk, encoding, callback) => {
       const line = chunk.toString();
 
-      filterLog(argv, line, callback);
+      filterLog(
+        {
+          ...argv,
+          searchExpression: JSON5.parse(argv.searchExpression)
+        },
+        line,
+        callback
+      );
     }))
     .pipe(process.stdout);
 };
