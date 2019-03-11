@@ -44,7 +44,7 @@ const filterLog = (configuration: LogFilterConfigurationType, line: string, call
     let result;
 
     if (matchObject(subject, configuration.searchExpression)) {
-      result = buffer.slice(-1 * lastLinePrinterLinesAgo - 1, -1).join('\n') + '\n' + line;
+      result = buffer.slice(-1 * lastLinePrinterLinesAgo - 1, -1).join('\n') + '\n' + line.trim() + '\n';
 
       lastLinePrinterLinesAgo = 0;
       printNextLines = configuration.context;
