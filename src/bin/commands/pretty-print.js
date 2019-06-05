@@ -74,13 +74,13 @@ const formatMessage = (configuration: LogFormatterConfigurationType, message: Me
   if (configuration.includeContext && message.context) {
     /* eslint-disable no-unused-vars */
     const {
-      application: tmp0,
-      hostname: tmp1,
-      instanceId: tmp2,
-      logLevel: tmp3,
-      namespace: tmp4,
-      package: tmp5,
-      package: tmp6,
+      application: termporary0,
+      hostname: termporary1,
+      instanceId: termporary2,
+      logLevel: termporary3,
+      namespace: termporary4,
+      package: termporary5,
+      package: termporary6,
       ...rest
     } = message.context;
 
