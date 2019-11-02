@@ -3,16 +3,16 @@
 import os from 'os';
 import split from 'split2';
 import {
-  ulid
+  ulid,
 } from 'ulid';
 import {
-  isRoarrLine
+  isRoarrLine,
 } from './utilities';
 
 type LogFormatterConfigurationType = {|
   +appendHostname: boolean,
   +appendInstanceId: boolean,
-  +excludeOrphans: boolean
+  +excludeOrphans: boolean,
 |};
 
 const createLogFormatter = (configuration: LogFormatterConfigurationType) => {
@@ -53,18 +53,18 @@ export const builder = (yargs: Object) => {
       'append-hostname': {
         default: false,
         description: 'Includes a hostname.',
-        type: 'boolean'
+        type: 'boolean',
       },
       'append-instance-id': {
         default: false,
         description: 'Generates and includes a unique instance ID.',
-        type: 'boolean'
+        type: 'boolean',
       },
       'exclude-orphans': {
         default: false,
         description: 'Excludes messages that cannot be recognized as Roarr log message.',
-        type: 'boolean'
-      }
+        type: 'boolean',
+      },
     });
 };
 

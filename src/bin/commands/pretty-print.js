@@ -4,22 +4,22 @@ import split from 'split2';
 import {constructor as Chalk} from 'chalk';
 import prettyjson from 'prettyjson';
 import type {
-  MessageType
+  MessageType,
 } from 'roarr';
 import {
-  isRoarrLine
+  isRoarrLine,
 } from './utilities';
 
 type ArgvType = {|
   +excludeOrphans: boolean,
   +includeContext: boolean,
-  +useColors: boolean
+  +useColors: boolean,
 |};
 
 type LogFormatterConfigurationType = {|
   +includeContext: boolean,
   +excludeOrphans: boolean,
-  +useColors: boolean
+  +useColors: boolean,
 |};
 
 /* eslint-disable quote-props */
@@ -29,7 +29,7 @@ const logLevels = {
   '30': 'INFO',
   '40': 'WARN',
   '50': 'ERROR',
-  '60': 'FATAL'
+  '60': 'FATAL',
 };
 /* eslint-enable */
 
@@ -43,24 +43,24 @@ export const builder = (yargs: Object) => {
       'exclude-orphans': {
         default: false,
         description: 'Excludes messages that cannot be recognized as Roarr log message.',
-        type: 'boolean'
+        type: 'boolean',
       },
       'include-context': {
         default: true,
         description: 'Includes message context payload.',
-        type: 'boolean'
+        type: 'boolean',
       },
       'use-colors': {
         default: true,
         description: 'Toggle use of colors in the output.',
-        type: 'boolean'
-      }
+        type: 'boolean',
+      },
     });
 };
 
 export const handler = (argv: ArgvType) => {
   const chalk = new Chalk({
-    enabled: argv.useColors
+    enabled: argv.useColors,
   });
 
   const logLevelColorMap = {
@@ -69,7 +69,7 @@ export const handler = (argv: ArgvType) => {
     FATAL: chalk.red,
     INFO: chalk.cyan,
     TRACE: chalk.gray,
-    WARN: chalk.yellow
+    WARN: chalk.yellow,
   };
 
   const getLogLevelName = (logLevel: number): string => {
@@ -121,7 +121,7 @@ export const handler = (argv: ArgvType) => {
       if (Object.keys(rest).length) {
         // eslint-disable-next-line no-console
         formattedMessage += prettyjson.render(rest, {
-          noColor: !argv.useColors
+          noColor: !argv.useColors,
         }) + '\n\n';
       }
     }

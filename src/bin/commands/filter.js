@@ -3,31 +3,31 @@
 import split from 'split2';
 import through from 'through2';
 import {
-  matchObject
+  matchObject,
 } from 'searchjs';
 import JSON5 from 'json5';
 import {
-  isRoarrLine
+  isRoarrLine,
 } from './utilities';
 
 type ArgvType = {|
   +context: number,
   +excludeOrphans: boolean,
-  +searchExpression: string
+  +searchExpression: string,
 |};
 
 type LogFilterConfigurationType = {|
   +context: number,
   +excludeOrphans: boolean,
   // eslint-disable-next-line flowtype/no-weak-types
-  +searchExpression: Object
+  +searchExpression: Object,
 |};
 
 let lastLinePrinterLinesAgo = 0;
 let printNextLines = 0;
 let buffer = [];
 
-const filterLog = (configuration: LogFilterConfigurationType, line: string, callback: (error?: Error, line?: string) => {}) => {
+const filterLog = (configuration: LogFilterConfigurationType, line: string, callback: (error?: Error, line?: string) => void) => {
   if (!isRoarrLine(line)) {
     callback(undefined, configuration.excludeOrphans ? '' : line + '\n');
 
@@ -76,13 +76,13 @@ export const builder = (yargs: Object) => {
       context: {
         default: 2,
         description: 'Print a number of lines leading and trailing context surrounding each match.',
-        type: 'number'
+        type: 'number',
       },
       'exclude-orphans': {
         default: false,
         description: 'Excludes messages that cannot be recognized as Roarr log message.',
-        type: 'boolean'
-      }
+        type: 'boolean',
+      },
     });
 };
 
@@ -96,10 +96,10 @@ export const handler = (argv: ArgvType) => {
       filterLog(
         {
           ...argv,
-          searchExpression: JSON5.parse(argv.searchExpression)
+          searchExpression: JSON5.parse(argv.searchExpression),
         },
         line,
-        callback
+        callback,
       );
     }))
     .pipe(process.stdout);
