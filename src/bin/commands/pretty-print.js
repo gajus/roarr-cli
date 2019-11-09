@@ -1,7 +1,7 @@
 // @flow
 
 import split from 'split2';
-import {constructor as Chalk} from 'chalk';
+import {Instance as Chalk} from 'chalk';
 import prettyjson from 'prettyjson';
 import type {
   MessageType,
