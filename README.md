@@ -6,11 +6,10 @@
 [![Canonical Code Style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
 [![Twitter Follow](https://img.shields.io/twitter/follow/kuizinas.svg?style=social&label=Follow)](https://twitter.com/kuizinas)
 
-Roarr CLI program provides ability to augment, filter and pretty-print [Roarr](https://github.com/gajus/roarr) logs.
+Roarr CLI program provides ability to filter and pretty-print [Roarr](https://github.com/gajus/roarr) logs.
 
 * [Usage](#usage)
 * [Commands](#cli-program)
-  * [`augment` program](#filter-program)
   * [`filter` program](#filter-program)
   * [`pretty-print` program](#pretty-print-program)
 
@@ -24,29 +23,6 @@ npm install @roarr/cli -g
 Explore all CLI commands and options using `roarr --help`.
 
 ## Commands
-
-### `augment` program
-
-Roarr `augment` CLI program appends additional information to every log message prior to sending to the log aggregator, e.g.
-
-```bash
-$ echo '{"context":{"package":"raygun","namespace":"createHttpProxyServer","logLevel":40},"message":"internal SSL Server running on 0.0.0.0:59222","sequence":0,"time":1533310067405,"version":"1.0.0"}
-{"context":{"package":"raygun","namespace":"createHttpProxyServer","logLevel":40},"message":"gracefully shutting down the proxy server","sequence":1,"time":1533310067438,"version":"1.0.0"}
-{"context":{"package":"raygun","namespace":"createOnCloseEventHandler","logLevel":30},"message":"raygun server closed","sequence":2,"time":1533310067439,"version":"1.0.0"}
-{"context":{"package":"raygun","namespace":"createOnCloseEventHandler","logLevel":30},"message":"internal SSL close","sequence":3,"time":1533310067439,"version":"1.0.0"}' | roarr augment --append-hostname true --append-instance-id true
-{"context":{"package":"raygun","namespace":"createHttpProxyServer","logLevel":40,"hostname":"curiosity.local","instanceId":"01CM07A7DGAB6YV25396FD772Q"},"message":"internal SSL Server running on 0.0.0.0:59222","sequence":0,"time":1533310067405,"version":"1.0.0"}
-{"context":{"package":"raygun","namespace":"createHttpProxyServer","logLevel":40,"hostname":"curiosity.local","instanceId":"01CM07A7DGAB6YV25396FD772Q"},"message":"gracefully shutting down the proxy server","sequence":1,"time":1533310067438,"version":"1.0.0"}
-{"context":{"package":"raygun","namespace":"createOnCloseEventHandler","logLevel":30,"hostname":"curiosity.local","instanceId":"01CM07A7DGAB6YV25396FD772Q"},"message":"raygun server closed","sequence":2,"time":1533310067439,"version":"1.0.0"}
-{"context":{"package":"raygun","namespace":"createOnCloseEventHandler","logLevel":30,"hostname":"curiosity.local","instanceId":"01CM07A7DGAB6YV25396FD772Q"},"message":"internal SSL close","sequence":3,"time":1533310067439,"version":"1.0.0"}
-```
-
-#### `augment` configuration
-
-|Name|Description|Default|
-|---|---|---|
-|`append-hostname`|Includes a hostname.|`true`|
-|`append-instance-id`|Generates and includes a unique instance ID.|`true`|
-|`exclude-orphans`|Excludes messages that cannot be recognized as Roarr log message.|`false`|
 
 ### `filter` program
 
