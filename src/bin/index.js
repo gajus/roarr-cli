@@ -13,8 +13,12 @@ import {
   createLogFilter,
 } from '../factories';
 import {
+  findNearestRoarrConfigurationPath,
   isRoarrLine,
 } from '../utilities';
+import type {
+  RoarrConfigurationType,
+} from '../types';
 
 const argv = yargs
   .env('ROARR')
@@ -56,6 +60,22 @@ const argv = yargs
   .wrap(80)
   .parse();
 
+const roarrConfigurationPath = findNearestRoarrConfigurationPath();
+
+let filterFunction = null;
+
+if (roarrConfigurationPath) {
+  /* eslint-disable global-require, import/no-dynamic-require */
+  // $FlowFixMe
+  const roarrConfiguration: RoarrConfigurationType = require(roarrConfigurationPath);
+
+  /* eslint-enable */
+
+  if (roarrConfiguration && roarrConfiguration.filterFunction) {
+    filterFunction = roarrConfiguration.filterFunction;
+  }
+}
+
 const chalk = new Chalk({
   enabled: argv.useColors,
 });
@@ -69,12 +89,13 @@ let stream = process.stdin
     return line + '\n';
   }));
 
-if (argv.filterExpression.length > 0) {
-  const filterExpressions = JSON5.parse(argv.filterExpression);
+if (argv.filterExpression || filterFunction) {
+  const filterExpressions = argv.filterExpression ? JSON5.parse(argv.filterExpression) : null;
 
   stream = stream.pipe(createLogFilter({
     chalk,
     filterExpression: filterExpressions,
+    filterFunction,
     head: argv.head,
     lag: argv.lag,
   }));

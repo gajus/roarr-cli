@@ -11,6 +11,8 @@ Roarr CLI program provides ability to filter and pretty-print [Roarr](https://gi
 * [Usage](#usage)
   * [Filtering logs](#filtering-logs)
   * [Formatting logs](#formatting-logs)
+* [Roarr configuration file](#roarr-configuration-file)
+  * [Supported Roarr configuration file properties](#supported-roarr-configuration-file-properties)
 
 ## Usage
 
@@ -35,7 +37,7 @@ Options:
 
 ```
 
-### Filtering logs
+### Filtering logs using filter expressions
 
 Use `--filter-expression` option to filter Roarr messages, e.g.
 
@@ -54,6 +56,10 @@ $ echo '
 ```
 
 Refer to [`searchjs`](https://github.com/deitch/searchjs) for search API documentation.
+
+### Filtering logs using JavaScript`
+
+
 
 ### Formatting logs
 
@@ -86,3 +92,24 @@ Provided that the `index.js` program produced an output such as:
 * `#` prefixed value denotes the namespace.
 
 The "pretty" format relies on logs using the context property names suggested in the [conventions](#conventions).
+
+## Roarr configuration file
+
+Roarr searches the current working directory for `.roarr.js` file. If it cannot find the configuration file, it will traverse upwards the directory tree searching for a matching configuration file and give up on a first permission error.
+
+`.roarr.js` is a JavaScript file that exports an object that defines properties used to configure Roarr, e.g.
+
+```js
+module.exports = {
+  filterFunction: (message) => {
+    return message.context && message.context.logLevel > 20;
+  },
+};
+
+```
+
+### Supported Roarr configuration file properties
+
+|Property name|Description|
+|---|---|
+|`filterFunction`|A function that receives Roarr message object and returns a boolean property that determines if the log should be filtered out (`false`) or included (`true`).|

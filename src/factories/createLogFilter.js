@@ -26,7 +26,10 @@ export default (configuration: LogFilterConfigurationType) => {
 
     let result;
 
-    if (matchObject(subject, configuration.filterExpression)) {
+    if (
+      configuration.filterExpression && matchObject(subject, configuration.filterExpression) ||
+      configuration.filterFunction && configuration.filterFunction(subject)
+    ) {
       result = buffer.slice(-1 * lastLinePrinterLinesAgo - 1, -1).join('\n') + '\n' + line.trim();
 
       lastLinePrinterLinesAgo = 0;
