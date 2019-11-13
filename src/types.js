@@ -6,7 +6,6 @@ import {
 
 export type LogFilterConfigurationType = {|
   +chalk: Chalk,
-  +excludeAlien: boolean,
   +filterExpression: string,
   +head: number,
   +lag: number,

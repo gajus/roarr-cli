@@ -11,6 +11,9 @@ import {
   createLogFormatter,
   createLogFilter,
 } from '../factories';
+import {
+  isRoarrLine,
+} from '../utilities';
 
 const argv = yargs
   .env('ROARR')
@@ -55,17 +58,30 @@ const chalk = new Chalk({
   enabled: argv.useColors,
 });
 
-process.stdin
-  .pipe(createLogFilter({
+let stream = process.stdin
+  .pipe(split((line) => {
+    if (!isRoarrLine(line)) {
+      return argv.excludeAlien ? '' : line + '\n';
+    }
+
+    return line + '\n';
+  }));
+
+if (argv.filterExpression) {
+  stream = stream.pipe(createLogFilter({
     chalk,
-    excludeAlien: argv.excludeAlien,
     filterExpression: argv.filterExpression,
     head: argv.head,
     lag: argv.lag,
-  }))
-  .pipe(createLogFormatter({
+  }));
+}
+
+if (argv.outputFormat === 'pretty') {
+  stream = stream.pipe(createLogFormatter({
     chalk,
     outputFormat: argv.outputFormat,
     useColors: argv.useColors,
-  }))
-  .pipe(process.stdout);
+  }));
+}
+
+stream.pipe(process.stdout);

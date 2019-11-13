@@ -51,10 +51,6 @@ export default (configuration: LogFilterConfigurationType) => {
 
   return split((line) => {
     if (!isRoarrLine(line)) {
-      return configuration.excludeAlien ? '' : line + '\n';
-    }
-
-    if (!filterExpression) {
       return line + '\n';
     }
 
