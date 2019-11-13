@@ -17,6 +17,8 @@ Roarr CLI program provides ability to filter and pretty-print [Roarr](https://gi
 ```bash
 $ npm install @roarr/cli -g
 $ roarr --help
+Filters and formats Roarr log message.
+
 Options:
   --version                  Show version number                       [boolean]
   --exclude-alien            Excludes messages that cannot be recognized as

@@ -18,6 +18,7 @@ import {
 
 const argv = yargs
   .env('ROARR')
+  .usage('Filters and formats Roarr log message.')
   .options({
     'exclude-alien': {
       default: false,
