@@ -9,57 +9,55 @@
 Roarr CLI program provides ability to filter and pretty-print [Roarr](https://github.com/gajus/roarr) logs.
 
 * [Usage](#usage)
-* [Commands](#cli-program)
-  * [`filter` program](#filter-program)
-  * [`pretty-print` program](#pretty-print-program)
+  * [Filtering logs](#filtering-logs)
+  * [Formatting logs](#formatting-logs)
 
 ## Usage
 
 ```bash
-npm install @roarr/cli -g
+$ npm install @roarr/cli -g
+$ roarr --help
+Options:
+  --version                  Show version number                       [boolean]
+  --exclude-alien            Excludes messages that cannot be recognized as
+                             Roarr log message.       [boolean] [default: false]
+  --filter-expression, --fe  Roarr message filter expression.
+  --head                     When filtering, print a number of lines leading the
+                             match.                        [number] [default: 2]
+  --lag                      When filtering, print a number of lines trailing
+                             the match.                    [number] [default: 2]
+  --output-format                [choices: "pretty", "json"] [default: "pretty"]
+  --use-colors               Toggle use of colors in the output.
+                                                       [boolean] [default: true]
+  --help                     Show help                                 [boolean]
 
 ```
 
-Explore all CLI commands and options using `roarr --help`.
+### Filtering logs
 
-## Commands
-
-### `filter` program
-
-Log filtering can be done using a JSON processor such as `jq`. However, `jq` [does make it easy to ignore invalid JSON](https://github.com/stedolan/jq/issues/1547).
-
-Roarr `filter` CLI program filters Roarr JSON messages while (optionally) passing through all the other content, e.g.
+Use `--filter-expression` option to filter Roarr messages, e.g.
 
 ```bash
 $ echo '
 {"context":{"package":"raygun","namespace":"createHttpProxyServer","logLevel":40},"message":"internal SSL Server running on 0.0.0.0:59222","sequence":0,"time":1533310067405,"version":"1.0.0"}
 {"context":{"package":"raygun","namespace":"createHttpProxyServer","logLevel":40},"message":"gracefully shutting down the proxy server","sequence":1,"time":1533310067438,"version":"1.0.0"}
 {"context":{"package":"raygun","namespace":"createOnCloseEventHandler","logLevel":30},"message":"raygun server closed","sequence":2,"time":1533310067439,"version":"1.0.0"}
-foo bar
 {"foo": "bar"}
 {"context":{"package":"raygun","namespace":"createOnCloseEventHandler","logLevel":30},"message":"internal SSL close","sequence":3,"time":1533310067439,"version":"1.0.0"}
-' | roarr filter '{"context.logLevel":{gt:30}}' | roarr pretty-print
+' | roarr --filter-expression '{"context.logLevel":{gt:30}}'
 [2018-08-03T15:27:47.405Z] WARN (40) (@raygun) (#createHttpProxyServer): internal SSL Server running on 0.0.0.0:59222
 [2018-08-03T15:27:47.438Z] WARN (40) (@raygun) (#createHttpProxyServer): gracefully shutting down the proxy server
-foo bar
 {"foo": "bar"}
 
 ```
 
 Refer to [`searchjs`](https://github.com/deitch/searchjs) for search API documentation.
 
-#### `filter` configuration
+### Formatting logs
 
-|Name|Description|Default|
-|---|---|---|
-|`context`|Print a number of lines leading and trailing context surrounding each match.|2|
-|`exclude-orphans`|Excludes messages that cannot be recognized as Roarr log message.|`false`|
+Use `--format-output pretty` option (default) to pretty-print logs.
 
-### `pretty-print` program
-
-Roarr `pretty-print` CLI program pretty-prints logs for the development purposes.
-
-To format the logs, pipe the program output to `roarr pretty-print` program, e.g.
+To format the logs, pipe the program output to `roarr` program, e.g.
 
 ```bash
 $ ROARR_LOG=true node index.js | roarr pretty-print
@@ -78,18 +76,11 @@ Provided that the `index.js` program produced an output such as:
 
 ```
 
-`roarr pretty-print` CLI program will format the output to look like this:
+`roarr` CLI program will format the output to look like this:
 
 ![CLI output demo](./.README/cli-output-demo.png)
 
 * `@` prefixed value denotes the name of the package.
 * `#` prefixed value denotes the namespace.
 
-The `roarr pretty-print` CLI program is using the context property names suggested in the [conventions](#conventions) to pretty-print the logs for the developer inspection purposes.
-
-#### `pretty-print` configuration
-
-|Name|Description|Default|
-|---|---|---|
-|`exclude-orphans`|Excludes messages that cannot be recognized as Roarr log message.|`false`|
-|`include-context`|Includes message context payload.|`true`|
+The "pretty" format relies on logs using the context property names suggested in the [conventions](#conventions).

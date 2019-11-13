@@ -1,6 +1,0 @@
-{
-  "rules": {
-    "callback-return": 0,
-    "filenames/match-regex": 0
-  }
-}
