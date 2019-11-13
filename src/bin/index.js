@@ -4,6 +4,7 @@
 
 import yargs from 'yargs';
 import split from 'split2';
+import JSON5 from 'json5';
 import {
   Instance as Chalk,
 } from 'chalk';
@@ -67,10 +68,12 @@ let stream = process.stdin
     return line + '\n';
   }));
 
-if (argv.filterExpression) {
+if (argv.filterExpression.length > 0) {
+  const filterExpressions = JSON5.parse(argv.filterExpression);
+
   stream = stream.pipe(createLogFilter({
     chalk,
-    filterExpression: argv.filterExpression,
+    filterExpression: filterExpressions,
     head: argv.head,
     lag: argv.lag,
   }));

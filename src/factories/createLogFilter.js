@@ -1,6 +1,5 @@
 // @flow
 
-import JSON5 from 'json5';
 import split from 'split2';
 import {
   matchObject,
@@ -18,8 +17,6 @@ export default (configuration: LogFilterConfigurationType) => {
   let printNextLines = 0;
   let buffer = [];
 
-  const filterExpression = configuration.filterExpression && JSON5.parse(configuration.filterExpression);
-
   const filterLog = (line: string) => {
     buffer.push(line);
 
@@ -29,7 +26,7 @@ export default (configuration: LogFilterConfigurationType) => {
 
     let result;
 
-    if (matchObject(subject, filterExpression)) {
+    if (matchObject(subject, configuration.filterExpression)) {
       result = buffer.slice(-1 * lastLinePrinterLinesAgo - 1, -1).join('\n') + '\n' + line.trim();
 
       lastLinePrinterLinesAgo = 0;
@@ -46,7 +43,7 @@ export default (configuration: LogFilterConfigurationType) => {
       lastLinePrinterLinesAgo++;
     }
 
-    return result.trim() + '\n';
+    return result ? result.trim() + '\n' : '';
   };
 
   return split((line) => {
