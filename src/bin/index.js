@@ -34,12 +34,12 @@ const argv = yargs
       description: 'Roarr message filter expression.',
     },
     head: {
-      default: 2,
+      default: 0,
       description: 'When filtering, print a number of lines leading the match.',
       type: 'number',
     },
     lag: {
-      default: 2,
+      default: 0,
       description: 'When filtering, print a number of lines trailing the match.',
       type: 'number',
     },
