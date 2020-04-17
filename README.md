@@ -16,6 +16,8 @@ Roarr CLI program provides ability to filter and pretty-print [Roarr](https://gi
 
 ## Usage
 
+_Installing globally:_
+
 ```bash
 $ npm install @roarr/cli -g
 $ roarr --help
@@ -35,6 +37,21 @@ Options:
                                                        [boolean] [default: true]
   --help                     Show help                                 [boolean]
 
+```
+
+_Installing locally:_
+
+Depending on your environment and tooling, installing globally may not work on your system for various reasons. Or you may not want to install a global tool. In that case you can also run the cli tool as a dev (or prod, if you choose) dependency.
+
+```bash
+npm install -D @roarr/cli
+```
+And then in your `package.json` file wherever you'd like Roarr to parse, pipe your command into `roarr`. E.g.:
+
+```json
+  "scripts": {
+    "start:dev": "nodemon output/bundled/init.js | roarr pretty-print",
+  }
 ```
 
 ### Filtering logs using filter expressions
