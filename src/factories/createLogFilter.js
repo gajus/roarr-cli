@@ -18,17 +18,23 @@ export default (configuration: LogFilterConfigurationType) => {
   let buffer = [];
 
   const filterLog = (line: string) => {
-    buffer.push(line);
-
-    buffer = buffer.slice(-1 * configuration.lag - 1);
-
+    
     const subject = JSON.parse(line);
+    let isSubject = configuration.filterFunction(subject)
+    
+    if(isSubject && !(isSubject===true || isSubject===false)){
+      line = JSON.stringify(isSubject); 
+    }
+    
+    buffer.push(line);
+    
+    buffer = buffer.slice(-1 * configuration.lag - 1);
 
     let result;
 
     if (
       configuration.filterExpression && matchObject(subject, configuration.filterExpression) ||
-      configuration.filterFunction && configuration.filterFunction(subject)
+      configuration.filterFunction && isSubject
     ) {
       result = buffer.slice(-1 * lastLinePrinterLinesAgo - 1, -1).join('\n') + '\n' + line.trim();
 
