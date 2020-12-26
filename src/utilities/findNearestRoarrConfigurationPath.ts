@@ -1,4 +1,4 @@
-// @flow
+/* eslint-disable node/no-sync */
 
 import fs from 'fs';
 import path from 'path';

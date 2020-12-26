@@ -1,5 +1,3 @@
-// @flow
-
 export {
   default as createLogFilter,
 } from './createLogFilter';

@@ -5,16 +5,14 @@
     "url": "http://gajus.com"
   },
   "ava": {
-    "babel": {
-      "compileAsTests": [
-        "test/helpers/**/*"
-      ]
-    },
+    "extensions": [
+      "ts"
+    ],
     "files": [
       "test/roarr/**/*"
     ],
     "require": [
-      "@babel/register"
+      "ts-node/register/transpile-only"
     ]
   },
   "bin": {
@@ -33,26 +31,22 @@
   },
   "description": "A CLI program for Roarr logger.",
   "devDependencies": {
-    "@ava/babel": "^1.0.1",
-    "@babel/cli": "^7.12.10",
-    "@babel/core": "^7.12.10",
-    "@babel/node": "^7.12.10",
-    "@babel/plugin-transform-flow-strip-types": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "@babel/register": "^7.12.10",
+    "@types/yargs": "^15.0.12",
     "ava": "^3.14.0",
-    "babel-plugin-istanbul": "^6.0.0",
     "coveralls": "^3.1.0",
+    "del-cli": "^3.0.1",
     "eslint": "^7.16.0",
-    "eslint-config-canonical": "^24.4.4",
+    "eslint-config-canonical": "^24.4.5",
     "flow-bin": "^0.141.0",
     "flow-copy-source": "^2.0.9",
     "husky": "^4.3.6",
     "nyc": "^15.1.0",
-    "semantic-release": "^17.3.0"
+    "semantic-release": "^17.3.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
   },
   "engines": {
-    "node": ">=10.0"
+    "node": ">=10"
   },
   "husky": {
     "hooks": {
@@ -86,9 +80,9 @@
     "url": "git@github.com:gajus/roarr-cli.git"
   },
   "scripts": {
-    "build": "rm -fr ./dist && NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps && flow-copy-source src dist",
-    "dev": "NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps --watch",
-    "lint": "eslint ./src ./test && flow",
+    "build": "del-cli ./dist && tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint ./src ./test && tsc --noEmit",
     "test": "NODE_ENV=test ava --serial --verbose"
   },
   "version": "1.0.0"

@@ -1,7 +1,3 @@
-#!/usr/bin/env node
-
-// @flow
-
 import {
   Instance as Chalk,
 } from 'chalk';
@@ -32,6 +28,7 @@ const argv = yargs
     'filter-expression': {
       alias: 'fe',
       description: 'Roarr message filter expression.',
+      type: 'string',
     },
     head: {
       default: 0,
@@ -65,19 +62,18 @@ const roarrConfigurationPath = findNearestRoarrConfigurationPath();
 let filterFunction = null;
 
 if (roarrConfigurationPath) {
-  /* eslint-disable global-require, import/no-dynamic-require */
-  // $FlowFixMe
+  /* eslint-disable node/global-require, import/no-dynamic-require, @typescript-eslint/no-var-requires */
   const roarrConfiguration: RoarrConfigurationType = require(roarrConfigurationPath);
 
   /* eslint-enable */
 
-  if (roarrConfiguration && roarrConfiguration.filterFunction) {
-    filterFunction = roarrConfiguration.filterFunction;
+  if (roarrConfiguration && roarrConfiguration['filter-function']) {
+    filterFunction = roarrConfiguration['filter-function'];
   }
 }
 
 const chalk = new Chalk({
-  enabled: argv.useColors,
+  level: argv['use-colors'] ? 3 : 0,
 });
 
 let stream = process.stdin
@@ -89,8 +85,8 @@ let stream = process.stdin
     return line + '\n';
   }));
 
-if (argv.filterExpression || filterFunction) {
-  const filterExpressions = argv.filterExpression ? JSON5.parse(argv.filterExpression) : null;
+if (argv['filter-expression'] || filterFunction) {
+  const filterExpressions = argv['filter-expression'] ? JSON5.parse(argv['filter-expression']) : null;
 
   stream = stream.pipe(createLogFilter({
     chalk,
@@ -101,11 +97,11 @@ if (argv.filterExpression || filterFunction) {
   }));
 }
 
-if (argv.outputFormat === 'pretty') {
+if (argv['output-format'] === 'pretty') {
   stream = stream.pipe(createLogFormatter({
     chalk,
-    outputFormat: argv.outputFormat,
-    useColors: argv.useColors,
+    outputFormat: argv['output-format'],
+    useColors: argv['use-colors'],
   }));
 }
 

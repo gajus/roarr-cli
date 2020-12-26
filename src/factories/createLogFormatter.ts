@@ -1,5 +1,3 @@
-// @flow
-
 import prettyjson from 'prettyjson';
 import type {
   MessageType,

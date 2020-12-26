@@ -1,7 +1,5 @@
-// @flow
-
 import {
-  Instance as Chalk,
+  Chalk,
 } from 'chalk';
 
 export default (chalk: Chalk, error: Error, input: string): string => {

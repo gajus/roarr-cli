@@ -1,5 +1,3 @@
-// @flow
-
 import test from 'ava';
 import isRoarrLine from '../../../src/utilities/isRoarrLine';
 

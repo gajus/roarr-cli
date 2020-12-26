@@ -1,5 +1,3 @@
-// @flow
-
 import {
   matchObject,
 } from 'searchjs';
@@ -15,7 +13,7 @@ import {
 export default (configuration: LogFilterConfigurationType) => {
   let lastLinePrinterLinesAgo = 0;
   let printNextLines = 0;
-  let buffer = [];
+  let buffer: string[] = [];
 
   const filterLog = (line: string) => {
     buffer.push(line);
@@ -57,7 +55,11 @@ export default (configuration: LogFilterConfigurationType) => {
     try {
       return filterLog(line);
     } catch (error) {
-      return formatInvalidInputMessage(configuration.chalk, error, line);
+      return formatInvalidInputMessage(
+        configuration.chalk,
+        error,
+        line,
+      );
     }
   });
 };
