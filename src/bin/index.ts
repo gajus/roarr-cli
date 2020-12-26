@@ -1,3 +1,7 @@
+#!/usr/bin/env node
+
+/* eslint-disable node/shebang */
+
 import {
   Instance as Chalk,
 } from 'chalk';
