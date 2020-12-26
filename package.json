@@ -31,6 +31,7 @@
   },
   "description": "A CLI program for Roarr logger.",
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/yargs": "^15.0.12",
     "ava": "^3.14.0",
     "coveralls": "^3.1.0",
