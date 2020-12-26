@@ -2,23 +2,23 @@
 
 // @flow
 
-import yargs from 'yargs';
-import split from 'split2';
-import JSON5 from 'json5';
 import {
   Instance as Chalk,
 } from 'chalk';
+import JSON5 from 'json5';
+import split from 'split2';
+import yargs from 'yargs';
 import {
   createLogFormatter,
   createLogFilter,
 } from '../factories';
+import type {
+  RoarrConfigurationType,
+} from '../types';
 import {
   findNearestRoarrConfigurationPath,
   isRoarrLine,
 } from '../utilities';
-import type {
-  RoarrConfigurationType,
-} from '../types';
 
 const argv = yargs
   .env('ROARR')

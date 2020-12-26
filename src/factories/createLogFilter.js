@@ -1,16 +1,16 @@
 // @flow
 
-import split from 'split2';
 import {
   matchObject,
 } from 'searchjs';
+import split from 'split2';
+import type {
+  LogFilterConfigurationType,
+} from '../types';
 import {
   formatInvalidInputMessage,
   isRoarrLine,
 } from '../utilities';
-import type {
-  LogFilterConfigurationType,
-} from '../types';
 
 export default (configuration: LogFilterConfigurationType) => {
   let lastLinePrinterLinesAgo = 0;

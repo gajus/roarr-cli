@@ -1,17 +1,17 @@
 // @flow
 
-import split from 'split2';
 import prettyjson from 'prettyjson';
 import type {
   MessageType,
 } from 'roarr';
+import split from 'split2';
+import type {
+  LogFormatterConfigurationType,
+} from '../types';
 import {
   formatInvalidInputMessage,
   isRoarrLine,
 } from '../utilities';
-import type {
-  LogFormatterConfigurationType,
-} from '../types';
 
 /* eslint-disable quote-props */
 const logLevels = {

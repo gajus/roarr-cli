@@ -1,11 +1,11 @@
 // @flow
 
-import type {
-  MessageType,
-} from 'roarr';
 import {
   Instance as Chalk,
 } from 'chalk';
+import type {
+  MessageType,
+} from 'roarr';
 
 export type RoarrConfigurationType = {|
   +filterFunction: (message: MessageType) => boolean,

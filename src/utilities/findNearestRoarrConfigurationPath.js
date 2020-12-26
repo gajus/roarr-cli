@@ -14,7 +14,7 @@ export default (startPath: string = process.cwd()): string | null => {
 
     try {
       fs.accessSync(roarrConfigurationPath, fs.constants.F_OK);
-    } catch (error) {
+    } catch {
       const nextPath = path.resolve(currentPath, '..');
 
       if (nextPath === currentPath) {
@@ -30,7 +30,7 @@ export default (startPath: string = process.cwd()): string | null => {
       fs.accessSync(roarrConfigurationPath, fs.constants.R_OK);
 
       return roarrConfigurationPath;
-    } catch (error) {
+    } catch {
       throw new RoarrError('Found .roarr.js but do not have read permission.');
     }
   }
