@@ -7,7 +7,7 @@ import type {
   MessageType,
 } from 'roarr';
 
-type FilterFunction = (message: MessageType) => boolean;
+export type FilterFunction = (message: MessageType) => boolean;
 
 export type RoarrConfigurationType = {
   readonly filterFunction: FilterFunction,

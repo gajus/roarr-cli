@@ -13,6 +13,7 @@ import {
   createLogFilter,
 } from '../factories';
 import type {
+  FilterFunction,
   RoarrConfigurationType,
 } from '../types';
 import {
@@ -63,7 +64,7 @@ const argv = yargs
 
 const roarrConfigurationPath = findNearestRoarrConfigurationPath();
 
-let filterFunction = null;
+let filterFunction: FilterFunction | null = null;
 
 if (roarrConfigurationPath) {
   /* eslint-disable node/global-require, import/no-dynamic-require, @typescript-eslint/no-var-requires */
@@ -71,8 +72,8 @@ if (roarrConfigurationPath) {
 
   /* eslint-enable */
 
-  if (roarrConfiguration && roarrConfiguration['filter-function']) {
-    filterFunction = roarrConfiguration['filter-function'];
+  if (roarrConfiguration?.filterFunction) {
+    filterFunction = roarrConfiguration.filterFunction;
   }
 }
 
