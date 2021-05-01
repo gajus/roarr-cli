@@ -37,7 +37,7 @@ Options:
 
 ```
 
-### Filtering logs using filter expressions
+### Filtering logs
 
 Use `--filter-expression` option to filter Roarr messages, e.g.
 
@@ -56,10 +56,6 @@ $ echo '
 ```
 
 Refer to [`searchjs`](https://github.com/deitch/searchjs) for search API documentation.
-
-### Filtering logs using JavaScript`
-
-
 
 ### Formatting logs
 
