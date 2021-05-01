@@ -6,6 +6,9 @@ import {
   Instance as Chalk,
 } from 'chalk';
 import JSON5 from 'json5';
+import {
+  io,
+} from 'socket.io-client';
 import split from 'split2';
 import yargs from 'yargs';
 import {
@@ -25,6 +28,16 @@ const argv = yargs
   .env('ROARR')
   .usage('Filters and formats Roarr log message.')
   .options({
+    'api-key': {
+      description: 'roarr.io API key. Configuring API key automatically streams logs to roarr.io service.',
+      type: 'string',
+    },
+    'api-url': {
+      default: 'https://roarr.io',
+      description: 'roarr.io API URL.',
+      hidden: true,
+      type: 'string',
+    },
     'exclude-alien': {
       default: false,
       description: 'Excludes messages that cannot be recognized as Roarr log message.',
@@ -81,8 +94,22 @@ const chalk = new Chalk({
   level: argv['use-colors'] ? 3 : 0,
 });
 
+let socket;
+
+if (argv['api-key']) {
+  socket = io(argv['api-url'], {
+    query: {
+      token: String(argv['api-key']),
+    },
+  });
+}
+
 let stream = process.stdin
   .pipe(split((line) => {
+    if (socket) {
+      socket.emit('log', line);
+    }
+
     if (!isRoarrLine(line)) {
       return argv.excludeAlien ? '' : line + '\n';
     }
@@ -111,3 +138,4 @@ if (argv['output-format'] === 'pretty') {
 }
 
 stream.pipe(process.stdout);
+

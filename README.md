@@ -9,6 +9,7 @@
 Roarr CLI program provides ability to filter and pretty-print [Roarr](https://github.com/gajus/roarr) logs.
 
 * [Usage](#usage)
+  * [Viewing logs in browser](#viewing-logs-in-browser)
   * [Filtering logs](#filtering-logs)
   * [Formatting logs](#formatting-logs)
 * [Roarr configuration file](#roarr-configuration-file)
@@ -23,19 +24,31 @@ Filters and formats Roarr log message.
 
 Options:
   --version                  Show version number                       [boolean]
+  --api-key                  roarr.io API key.                          [string]
   --exclude-alien            Excludes messages that cannot be recognized as
                              Roarr log message.       [boolean] [default: false]
-  --filter-expression, --fe  Roarr message filter expression.
+  --filter-expression, --fe  Roarr message filter expression.           [string]
   --head                     When filtering, print a number of lines leading the
-                             match.                        [number] [default: 2]
+                             match.                        [number] [default: 0]
   --lag                      When filtering, print a number of lines trailing
-                             the match.                    [number] [default: 2]
+                             the match.                    [number] [default: 0]
   --output-format                [choices: "pretty", "json"] [default: "pretty"]
   --use-colors               Toggle use of colors in the output.
                                                        [boolean] [default: true]
   --help                     Show help                                 [boolean]
 
 ```
+
+### Viewing logs in browser
+
+Configure `--api-key` to stream logs to https://roarr.io.
+
+```bash
+export ROARR_API_KEY=00000000-0000-0000-0000-000000000000
+
+```
+
+View logs by opening `https://roarr.io?room=[YOUR API KEY]`.
 
 ### Filtering logs
 
