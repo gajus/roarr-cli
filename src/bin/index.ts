@@ -33,7 +33,7 @@ const argv = yargs
       type: 'string',
     },
     'api-url': {
-      default: 'https://roarr.io',
+      default: 'https://api.roarr.io',
       description: 'roarr.io API URL.',
       hidden: true,
       type: 'string',
