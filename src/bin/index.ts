@@ -102,6 +102,7 @@ if (argv['api-key']) {
     query: {
       hostname: os.hostname(),
       token: String(argv['api-key']),
+      version: '1.0.0',
     },
   });
 }
