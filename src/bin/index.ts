@@ -59,6 +59,10 @@ const argv = yargs
       description: 'When filtering, print a number of lines trailing the match.',
       type: 'number',
     },
+    name: {
+      description: 'Name of the application. Used by roarr.io.',
+      type: 'string',
+    },
     'output-format': {
       choices: [
         'pretty',
@@ -101,6 +105,7 @@ if (argv['api-key']) {
   socket = io(argv['api-url'], {
     query: {
       hostname: os.hostname(),
+      name: argv.name || '',
       token: String(argv['api-key']),
       version: '1.0.0',
     },
