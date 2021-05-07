@@ -60,7 +60,7 @@ const argv = yargs
       type: 'number',
     },
     name: {
-      description: 'Name of the application. Used by roarr.io.',
+      description: 'Name of the application. Used by roarr.io to identify the source of logs.',
       type: 'string',
     },
     'output-format': {
@@ -71,7 +71,7 @@ const argv = yargs
       default: 'pretty',
     },
     tags: {
-      description: 'List of (comma separated) tags. Used by roarr.io.',
+      description: 'List of (comma separated) tags. Used by roarr.io to identify the source of logs.',
       type: 'string',
     },
     'use-colors': {
