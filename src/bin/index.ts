@@ -2,6 +2,7 @@
 
 /* eslint-disable node/shebang */
 
+import os from 'os';
 import {
   Instance as Chalk,
 } from 'chalk';
@@ -99,6 +100,7 @@ let socket;
 if (argv['api-key']) {
   socket = io(argv['api-url'], {
     query: {
+      hostname: os.hostname(),
       token: String(argv['api-key']),
     },
   });
