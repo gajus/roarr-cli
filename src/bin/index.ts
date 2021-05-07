@@ -8,6 +8,9 @@ import {
 } from 'chalk';
 import JSON5 from 'json5';
 import {
+  nanoid,
+} from 'nanoid';
+import {
   io,
 } from 'socket.io-client';
 import split from 'split2';
@@ -109,7 +112,7 @@ if (argv['api-key']) {
   socket = io(argv['api-url'], {
     query: {
       hostname: os.hostname(),
-      name: argv.name || '',
+      name: argv.name || os.hostname() + ' ' + nanoid(),
       tags: argv.tags || '',
       token: String(argv['api-key']),
       version: '1.0.0',
