@@ -10,6 +10,7 @@ Roarr CLI program provides ability to filter and pretty-print [Roarr](https://gi
 
 * [Usage](#usage)
   * [Viewing logs in browser](#viewing-logs-in-browser)
+    * [Identifying Log Source](#identifying-log-source)
   * [Filtering logs](#filtering-logs)
   * [Formatting logs](#formatting-logs)
 * [Roarr configuration file](#roarr-configuration-file)
@@ -36,7 +37,6 @@ Options:
   --use-colors               Toggle use of colors in the output.
                                                        [boolean] [default: true]
   --help                     Show help                                 [boolean]
-
 ```
 
 ### Viewing logs in browser
@@ -45,10 +45,27 @@ Configure `--api-key` to stream logs to https://roarr.io.
 
 ```bash
 export ROARR_API_KEY=00000000-0000-0000-0000-000000000000
-
 ```
 
 View logs by opening `https://roarr.io?room=[YOUR API KEY]`.
+
+#### Identifying Log Source
+
+By default, all `@roarr/cli` agents are assigned a random name.
+
+Agent name is used to identify the source of logs in roarr.io UI.
+
+You can override the random name using environment variables:
+
+```bash
+export ROARR_NAME=roarr-web-app
+```
+
+Additionally, you can assign (comma separated) tags:
+
+```bash
+export ROARR_TAGS=production,roarr-web-app
+```
 
 ### Filtering logs
 
@@ -65,7 +82,6 @@ $ echo '
 [2018-08-03T15:27:47.405Z] WARN (40) (@raygun) (#createHttpProxyServer): internal SSL Server running on 0.0.0.0:59222
 [2018-08-03T15:27:47.438Z] WARN (40) (@raygun) (#createHttpProxyServer): gracefully shutting down the proxy server
 {"foo": "bar"}
-
 ```
 
 Refer to [`searchjs`](https://github.com/deitch/searchjs) for search API documentation.
@@ -78,7 +94,6 @@ To format the logs, pipe the program output to `roarr` program, e.g.
 
 ```bash
 $ ROARR_LOG=true node index.js | roarr pretty-print
-
 ```
 
 Provided that the `index.js` program produced an output such as:
@@ -90,7 +105,6 @@ Provided that the `index.js` program produced an output such as:
 {"context":{"package":"forward-proxy","namespace":"createRequestProcessor","logLevel":30},"message":"request finished <- http://localhost:62595/","sequence":3,"time":1506803138749,"version":"1.0.0"}
 {"context":{"package":"forward-proxy","namespace":"createLogInterceptor","logLevel":30,"method":"GET","requestHeaders":{"host":"localhost:62595","connection":"close"},"responseHeaders":{"date":"Sat, 30 Sep 2017 20:25:38 GMT","connection":"close","content-length":"7","x-forward-proxy-request-id":"2b746d92-1a8b-4f36-b3cc-5bff57dad94d","x-forward-proxy-cache-hit":"false"},"statusCode":200,"url":"http://localhost:62595/"},"message":"response","sequence":4,"time":1506803138755,"version":"1.0.0"}
 {"context":{"package":"forward-proxy","namespace":"createLogInterceptor","logLevel":30,"method":"GET","requestHeaders":{"host":"localhost:62595","connection":"close"},"responseHeaders":{"date":"Sat, 30 Sep 2017 20:25:38 GMT","content-length":"7","x-forward-proxy-request-id":"2b746d92-1a8b-4f36-b3cc-5bff57dad94d","x-forward-proxy-cache-hit":"true"},"statusCode":200,"url":"http://localhost:62595/"},"message":"response","sequence":5,"time":1506803138762,"version":"1.0.0"}
-
 ```
 
 `roarr` CLI program will format the output to look like this:
@@ -114,7 +128,6 @@ module.exports = {
     return message.context && message.context.logLevel > 20;
   },
 };
-
 ```
 
 ### Supported Roarr configuration file properties
