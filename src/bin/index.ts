@@ -70,6 +70,10 @@ const argv = yargs
       ],
       default: 'pretty',
     },
+    tags: {
+      description: 'List of (comma separated) tags. Used by roarr.io.',
+      type: 'string',
+    },
     'use-colors': {
       default: true,
       description: 'Toggle use of colors in the output.',
@@ -106,6 +110,7 @@ if (argv['api-key']) {
     query: {
       hostname: os.hostname(),
       name: argv.name || '',
+      tags: argv.tags || '',
       token: String(argv['api-key']),
       version: '1.0.0',
     },
