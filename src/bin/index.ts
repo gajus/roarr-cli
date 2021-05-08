@@ -8,9 +8,6 @@ import {
 } from 'chalk';
 import JSON5 from 'json5';
 import {
-  customAlphabet,
-} from 'nanoid';
-import {
   io,
 } from 'socket.io-client';
 import split from 'split2';
@@ -87,8 +84,6 @@ const argv = yargs
   .wrap(80)
   .parse();
 
-const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 6);
-
 const roarrConfigurationPath = findNearestRoarrConfigurationPath();
 
 let filterFunction: FilterFunction | null = null;
@@ -114,7 +109,7 @@ if (argv['api-key']) {
   socket = io(argv['api-url'], {
     query: {
       hostname: os.hostname(),
-      name: argv.name || os.hostname() + ' ' + nanoid(),
+      name: argv.name || '',
       tags: argv.tags || '',
       token: String(argv['api-key']),
       version: '1.0.0',
