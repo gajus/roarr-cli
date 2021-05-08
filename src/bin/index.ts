@@ -14,6 +14,9 @@ import {
   io,
 } from 'socket.io-client';
 import split from 'split2';
+import {
+  v4 as uuid,
+} from 'uuid';
 import yargs from 'yargs';
 import {
   createLogFormatter,
@@ -112,6 +115,7 @@ if (argv['api-key']) {
   socket = io(argv['api-url'], {
     query: {
       hostname: os.hostname(),
+      instance: uuid(),
       name: argv.name || os.hostname() + ' ' + nanoid(),
       tags: argv.tags || '',
       token: String(argv['api-key']),
