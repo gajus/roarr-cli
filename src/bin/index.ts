@@ -115,8 +115,8 @@ if (argv['api-key']) {
   socket = io(argv['api-url'], {
     query: {
       hostname: os.hostname(),
-      instance: uuid(),
       name: argv.name || os.hostname() + ' ' + nanoid(),
+      stream: uuid(),
       tags: argv.tags || '',
       token: String(argv['api-key']),
       version: '1.0.0',
