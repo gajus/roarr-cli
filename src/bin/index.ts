@@ -103,6 +103,7 @@ const chalk = new Chalk({
   level: argv['use-colors'] ? 3 : 0,
 });
 
+let streamConfiguration;
 let socket;
 
 if (argv['api-key']) {
@@ -115,11 +116,15 @@ if (argv['api-key']) {
       version: '1.0.0',
     },
   });
+
+  socket.on('stream_configuration', (nextStreamConfiguration) => {
+    streamConfiguration = nextStreamConfiguration;
+  });
 }
 
 let stream = process.stdin
   .pipe(split((line) => {
-    if (socket) {
+    if (socket && streamConfiguration.enabled) {
       socket.emit('log', line);
     }
 
