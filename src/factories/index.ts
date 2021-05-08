@@ -1,6 +1,9 @@
 export {
-  default as createLogFilter,
+  createLogFilter,
 } from './createLogFilter';
 export {
-  default as createLogFormatter,
+  createLogFormatter,
 } from './createLogFormatter';
+export {
+  createRemoteStream,
+} from './createRemoteStream';

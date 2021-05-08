@@ -2,19 +2,16 @@
 
 /* eslint-disable node/shebang */
 
-import os from 'os';
 import {
   Instance as Chalk,
 } from 'chalk';
 import JSON5 from 'json5';
-import {
-  io,
-} from 'socket.io-client';
 import split from 'split2';
 import yargs from 'yargs';
 import {
-  createLogFormatter,
   createLogFilter,
+  createLogFormatter,
+  createRemoteStream,
 } from '../factories';
 import type {
   FilterFunction,
@@ -103,29 +100,21 @@ const chalk = new Chalk({
   level: argv['use-colors'] ? 3 : 0,
 });
 
-let streamConfiguration;
-let socket;
+let remoteStream;
 
 if (argv['api-key']) {
-  socket = io(argv['api-url'], {
-    query: {
-      hostname: os.hostname(),
-      name: argv.name || '',
-      tags: argv.tags || '',
-      token: String(argv['api-key']),
-      version: '1.0.0',
-    },
-  });
-
-  socket.on('stream_configuration', (nextStreamConfiguration) => {
-    streamConfiguration = nextStreamConfiguration;
-  });
+  remoteStream = createRemoteStream(
+    argv['api-url'],
+    String(argv['api-key']),
+    argv.name || '',
+    argv.tags || '',
+  );
 }
 
 let stream = process.stdin
   .pipe(split((line) => {
-    if (socket && streamConfiguration.enabled) {
-      socket.emit('log', line);
+    if (remoteStream) {
+      remoteStream.emit(line);
     }
 
     if (!isRoarrLine(line)) {

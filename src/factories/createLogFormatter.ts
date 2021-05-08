@@ -22,7 +22,7 @@ const logLevels = {
 };
 /* eslint-enable */
 
-export default (configuration: LogFormatterConfigurationType) => {
+export const createLogFormatter = (configuration: LogFormatterConfigurationType) => {
   const chalk = configuration.chalk;
 
   const logLevelColorMap = {

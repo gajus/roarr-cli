@@ -10,7 +10,7 @@ import {
   isRoarrLine,
 } from '../utilities';
 
-export default (configuration: LogFilterConfigurationType) => {
+export const createLogFilter = (configuration: LogFilterConfigurationType) => {
   let lastLinePrinterLinesAgo = 0;
   let printNextLines = 0;
   let buffer: string[] = [];

@@ -6,7 +6,7 @@ import {
   RoarrError,
 } from '../errors';
 
-export default (startPath: string = process.cwd()): string | null => {
+export const findNearestRoarrConfigurationPath = (startPath: string = process.cwd()): string | null => {
   let currentPath = startPath;
 
   while (true) {

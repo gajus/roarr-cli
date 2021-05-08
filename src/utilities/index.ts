@@ -1,9 +1,9 @@
 export {
-  default as findNearestRoarrConfigurationPath,
+  findNearestRoarrConfigurationPath,
 } from './findNearestRoarrConfigurationPath';
 export {
-  default as formatInvalidInputMessage,
+  formatInvalidInputMessage,
 } from './formatInvalidInputMessage';
 export {
-  default as isRoarrLine,
+  isRoarrLine,
 } from './isRoarrLine';
