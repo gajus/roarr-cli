@@ -41,7 +41,7 @@ export const createRemoteStream = (
 
   return {
     emit: (message: string) => {
-      if (!streamConfiguration.enabled) {
+      if (!streamConfiguration || !streamConfiguration.enabled) {
         return;
       }
 
