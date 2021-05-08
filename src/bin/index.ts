@@ -8,7 +8,7 @@ import {
 } from 'chalk';
 import JSON5 from 'json5';
 import {
-  nanoid,
+  customAlphabet,
 } from 'nanoid';
 import {
   io,
@@ -89,6 +89,8 @@ const argv = yargs
   .help()
   .wrap(80)
   .parse();
+
+const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 6);
 
 const roarrConfigurationPath = findNearestRoarrConfigurationPath();
 
