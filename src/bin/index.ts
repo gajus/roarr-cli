@@ -118,7 +118,6 @@ if (argv['api-key']) {
     query: {
       hostname: os.hostname(),
       name: argv.name || os.hostname() + ' ' + nanoid(),
-      stream: uuid(),
       tags: argv.tags || '',
       token: String(argv['api-key']),
       version: '1.0.0',
