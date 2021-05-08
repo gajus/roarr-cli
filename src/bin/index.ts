@@ -14,9 +14,6 @@ import {
   io,
 } from 'socket.io-client';
 import split from 'split2';
-import {
-  v4 as uuid,
-} from 'uuid';
 import yargs from 'yargs';
 import {
   createLogFormatter,

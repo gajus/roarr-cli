@@ -28,8 +28,6 @@
     "searchjs": "^1.1.0",
     "socket.io-client": "^4.0.1",
     "split2": "^3.2.2",
-    "ulid": "^2.3.0",
-    "uuid": "^3.4.0",
     "yargs": "^16.2.0"
   },
   "description": "A CLI program for Roarr logger.",
@@ -41,8 +39,6 @@
     "del-cli": "^3.0.1",
     "eslint": "^7.16.0",
     "eslint-config-canonical": "^24.4.5",
-    "flow-bin": "^0.141.0",
-    "flow-copy-source": "^2.0.9",
     "husky": "^4.3.6",
     "nyc": "^15.1.0",
     "semantic-release": "^17.3.0",
