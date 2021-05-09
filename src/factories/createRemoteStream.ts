@@ -5,6 +5,9 @@ import {
 import {
   throttle,
 } from 'throttle-debounce';
+import {
+  v4 as uuid,
+} from 'uuid';
 
 export const createRemoteStream = (
   apiUrl: string,
@@ -19,6 +22,7 @@ export const createRemoteStream = (
     query: {
       hostname: os.hostname(),
       name: name || '',
+      stream: uuid(),
       tags: tags || '',
       token: apiKey,
       version: '1.0.0',
