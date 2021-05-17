@@ -10,6 +10,7 @@ node_modules
 !.github
 !.gitignore
 !.husky
+!.lintstagedrc
 !.npmignore
 !.nycrc
 !.README
