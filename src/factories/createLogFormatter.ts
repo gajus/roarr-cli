@@ -1,6 +1,6 @@
 import prettyjson from 'prettyjson';
 import type {
-  MessageType,
+  Message,
 } from 'roarr';
 import split from 'split2';
 import type {
@@ -38,7 +38,7 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
     return logLevels[logLevel] || 'INFO';
   };
 
-  const formatMessage = (message: MessageType): string => {
+  const formatMessage = (message: Message): string => {
     let formattedMessage = '';
 
     formattedMessage = '[' + new Date(message.time).toISOString() + ']';

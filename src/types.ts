@@ -4,10 +4,10 @@ import type {
   Chalk,
 } from 'chalk';
 import type {
-  MessageType,
+  Message,
 } from 'roarr';
 
-export type FilterFunction = (message: MessageType) => boolean;
+export type FilterFunction = (message: Message) => boolean;
 
 export type RoarrConfigurationType = {
   readonly filterFunction: FilterFunction,

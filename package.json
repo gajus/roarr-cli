@@ -49,11 +49,6 @@
   "engines": {
     "node": ">=10"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm run test && npm run build"
-    }
-  },
   "keywords": [
     "log",
     "logger",
