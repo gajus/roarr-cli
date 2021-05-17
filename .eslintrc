@@ -4,5 +4,8 @@
     "canonical/node",
     "canonical/typescript"
   ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
   "root": true
 }

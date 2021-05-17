@@ -1,6 +1,6 @@
 // @flow
 
-import {
+import type {
   Chalk,
 } from 'chalk';
 import type {
@@ -15,14 +15,14 @@ export type RoarrConfigurationType = {
 
 export type LogFilterConfigurationType = {
   readonly chalk: Chalk,
-  readonly filterExpression: null | string,
-  readonly filterFunction: null | FilterFunction,
+  readonly filterExpression: string | null,
+  readonly filterFunction: FilterFunction | null,
   readonly head: number,
   readonly lag: number,
 };
 
 export type LogFormatterConfigurationType = {
   readonly chalk: Chalk,
-  readonly outputFormat: 'pretty' | 'json',
+  readonly outputFormat: 'json' | 'pretty',
   readonly useColors: boolean,
 };

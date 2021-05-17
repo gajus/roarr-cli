@@ -86,10 +86,10 @@ const roarrConfigurationPath = findNearestRoarrConfigurationPath();
 let filterFunction: FilterFunction | null = null;
 
 if (roarrConfigurationPath) {
-  /* eslint-disable node/global-require, import/no-dynamic-require, @typescript-eslint/no-var-requires */
+  /* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires */
   const roarrConfiguration: RoarrConfigurationType = require(roarrConfigurationPath);
 
-  /* eslint-enable */
+  /* eslint-enable @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires */
 
   if (roarrConfiguration?.filterFunction) {
     filterFunction = roarrConfiguration.filterFunction;
@@ -106,8 +106,8 @@ if (argv['api-key']) {
   remoteStream = createRemoteStream(
     argv['api-url'],
     String(argv['api-key']),
-    argv.name || '',
-    argv.tags || '',
+    argv.name ?? '',
+    argv.tags ?? '',
   );
 }
 

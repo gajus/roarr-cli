@@ -66,7 +66,7 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
     formattedMessage += ': ' + message.message + '\n';
 
     if (message.context) {
-      /* eslint-disable no-unused-vars */
+      /* eslint-disable @typescript-eslint/no-unused-vars */
       const {
         application: termporary0,
         hostname: termporary1,
@@ -78,10 +78,9 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
         ...rest
       } = message.context;
 
-      /* eslint-enable */
+      /* eslint-enable @typescript-eslint/no-unused-vars */
 
       if (Object.keys(rest).length) {
-        // eslint-disable-next-line no-console
         formattedMessage += prettyjson.render(rest, {
           noColor: !configuration.useColors,
         }) + '\n\n';

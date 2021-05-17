@@ -26,7 +26,7 @@ export const createLogFilter = (configuration: LogFilterConfigurationType) => {
 
     if (
       configuration.filterExpression && matchObject(subject, configuration.filterExpression) ||
-      configuration.filterFunction && configuration.filterFunction(subject)
+      configuration?.filterFunction(subject)
     ) {
       result = buffer.slice(-1 * lastLinePrinterLinesAgo - 1, -1).join('\n') + '\n' + line.trim();
 
