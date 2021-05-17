@@ -4,7 +4,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "lib": [
-      "es2018"
+      "es2020"
     ],
     "module": "commonjs",
     "moduleResolution": "node",
@@ -15,7 +15,7 @@
     "outDir": "dist",
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2018"
+    "target": "es2020"
   },
   "exclude": [
     "dist",
