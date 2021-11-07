@@ -68,13 +68,13 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
     if (message.context) {
       /* eslint-disable @typescript-eslint/no-unused-vars */
       const {
-        application: termporary0,
-        hostname: termporary1,
-        instanceId: termporary2,
-        logLevel: termporary3,
-        namespace: termporary4,
-        package: termporary5,
-        package: termporary6,
+        application: temporary0,
+        hostname: temporary1,
+        instanceId: temporary2,
+        logLevel: temporary3,
+        namespace: temporary4,
+        package: temporary5,
+        package: temporary6,
         ...rest
       } = message.context;
 
