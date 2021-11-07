@@ -1,6 +1,7 @@
 import {
-  matchObject,
-} from 'searchjs';
+  parse,
+  test,
+} from 'liqe';
 import split from 'split2';
 import {
   formatInvalidInputMessage,
@@ -15,6 +16,8 @@ export const createLogFilter = (configuration: LogFilterConfigurationType) => {
   let printNextLines = 0;
   let buffer: string[] = [];
 
+  const query = configuration.filterExpression ? parse(configuration.filterExpression) : null;
+
   const filterLog = (line: string) => {
     buffer.push(line);
 
@@ -25,7 +28,7 @@ export const createLogFilter = (configuration: LogFilterConfigurationType) => {
     let result;
 
     if (
-      configuration.filterExpression && matchObject(subject, configuration.filterExpression) ||
+      query && test(query, subject) ||
       configuration.filterFunction?.(subject)
     ) {
       result = buffer.slice(-1 * lastLinePrinterLinesAgo - 1, -1).join('\n') + '\n' + line.trim();

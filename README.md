@@ -28,7 +28,7 @@ Options:
   --api-key                  roarr.io API key.                          [string]
   --exclude-alien            Excludes messages that cannot be recognized as
                              Roarr log message.       [boolean] [default: false]
-  --filter-expression, --fe  Roarr message filter expression.           [string]
+  --filter                   Roarr message Liqe filter expression.       [string]
   --head                     When filtering, print a number of lines leading the
                              match.                        [number] [default: 0]
   --lag                      When filtering, print a number of lines trailing
@@ -69,7 +69,7 @@ export ROARR_TAGS=production,roarr-web-app
 
 ### Filtering logs
 
-Use `--filter-expression` option to filter Roarr messages, e.g.
+Use `--filter` option to filter Roarr messages, e.g.
 
 ```bash
 $ echo '
@@ -78,13 +78,13 @@ $ echo '
 {"context":{"package":"raygun","namespace":"createOnCloseEventHandler","logLevel":30},"message":"raygun server closed","sequence":2,"time":1533310067439,"version":"1.0.0"}
 {"foo": "bar"}
 {"context":{"package":"raygun","namespace":"createOnCloseEventHandler","logLevel":30},"message":"internal SSL close","sequence":3,"time":1533310067439,"version":"1.0.0"}
-' | roarr --filter-expression '{"context.logLevel":{gt:30}}'
+' | roarr --filter 'context.logLevel:>30'
 [2018-08-03T15:27:47.405Z] WARN (40) (@raygun) (#createHttpProxyServer): internal SSL Server running on 0.0.0.0:59222
 [2018-08-03T15:27:47.438Z] WARN (40) (@raygun) (#createHttpProxyServer): gracefully shutting down the proxy server
 {"foo": "bar"}
 ```
 
-Refer to [`searchjs`](https://github.com/deitch/searchjs) for search API documentation.
+Refer to [`Liqe`](https://github.com/gajus/liqe) documentation for query syntax.
 
 ### Formatting logs
 

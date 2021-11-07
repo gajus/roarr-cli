@@ -81,9 +81,9 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
       /* eslint-enable @typescript-eslint/no-unused-vars */
 
       if (Object.keys(rest).length) {
-        formattedMessage += prettyjson.render(rest, {
+        formattedMessage += String(prettyjson.render(rest, {
           noColor: !configuration.useColors,
-        }) + '\n\n';
+        })) + '\n\n';
       }
     }
 

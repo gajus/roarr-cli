@@ -5,7 +5,6 @@
 import {
   Instance as Chalk,
 } from 'chalk';
-import JSON5 from 'json5';
 import split from 'split2';
 import yargs from 'yargs';
 import {
@@ -41,9 +40,8 @@ const argv = yargs
       description: 'Excludes messages that cannot be recognized as Roarr log message.',
       type: 'boolean',
     },
-    'filter-expression': {
-      alias: 'fe',
-      description: 'Roarr message filter expression.',
+    filter: {
+      description: 'Roarr message Liqe filter expression.',
       type: 'string',
     },
     head: {
@@ -124,12 +122,10 @@ let stream = process.stdin
     return line + '\n';
   }));
 
-if (argv['filter-expression'] || filterFunction) {
-  const filterExpressions = argv['filter-expression'] ? JSON5.parse(argv['filter-expression']) : null;
-
+if (argv.filter || filterFunction) {
   stream = stream.pipe(createLogFilter({
     chalk,
-    filterExpression: filterExpressions,
+    filterExpression: argv.filter ?? null,
     filterFunction,
     head: argv.head,
     lag: argv.lag,
