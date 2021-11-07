@@ -13,14 +13,14 @@ import {
   createLogFormatter,
   createRemoteStream,
 } from '../factories';
-import type {
-  FilterFunction,
-  RoarrConfigurationType,
-} from '../types';
 import {
   findNearestRoarrConfigurationPath,
   isRoarrLine,
 } from '../utilities';
+import type {
+  FilterFunction,
+  RoarrConfigurationType,
+} from '../types';
 
 const argv = yargs
   .env('ROARR')
@@ -79,7 +79,7 @@ const argv = yargs
   })
   .help()
   .wrap(80)
-  .parse();
+  .parseSync();
 
 const roarrConfigurationPath = findNearestRoarrConfigurationPath();
 

@@ -1,15 +1,15 @@
 import prettyjson from 'prettyjson';
-import type {
-  Message,
-} from 'roarr';
 import split from 'split2';
-import type {
-  LogFormatterConfigurationType,
-} from '../types';
 import {
   formatInvalidInputMessage,
   isRoarrLine,
 } from '../utilities';
+import type {
+  LogFormatterConfigurationType,
+} from '../types';
+import type {
+  Message,
+} from 'roarr';
 
 /* eslint-disable quote-props */
 const logLevels = {
@@ -97,7 +97,7 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
 
     try {
       return formatMessage(JSON.parse(line));
-    } catch (error) {
+    } catch (error: any) {
       return formatInvalidInputMessage(chalk, error, line);
     }
   });

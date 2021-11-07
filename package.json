@@ -19,32 +19,32 @@
     "roarr": "dist/src/bin/index.js"
   },
   "dependencies": {
-    "chalk": "^4.1.1",
+    "chalk": "^4.1.2",
     "es6-error": "^4.1.1",
     "json5": "^2.2.0",
     "prettyjson": "^1.2.1",
-    "roarr": "^4.2.5",
+    "roarr": "^7.4.0",
     "searchjs": "^1.1.0",
-    "socket.io-client": "^4.1.1",
-    "split2": "^3.2.2",
+    "socket.io-client": "^4.3.2",
+    "split2": "^4.1.0",
     "throttle-debounce": "^3.0.1",
     "uuid": "^8.3.2",
-    "yargs": "^17.0.1"
+    "yargs": "^17.2.1"
   },
   "description": "A CLI program for Roarr logger.",
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@types/yargs": "^16.0.1",
+    "@types/yargs": "^17.0.5",
     "ava": "^3.15.0",
-    "coveralls": "^3.1.0",
-    "del-cli": "^3.0.1",
+    "coveralls": "^3.1.1",
+    "del-cli": "^4.0.1",
     "eslint": "^7.26.0",
     "eslint-config-canonical": "^26.2.3",
-    "husky": "^6.0.0",
+    "husky": "^7.0.4",
     "nyc": "^15.1.0",
-    "semantic-release": "^17.4.3",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.2.4"
+    "semantic-release": "^18.0.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.4.4"
   },
   "engines": {
     "node": ">=14"

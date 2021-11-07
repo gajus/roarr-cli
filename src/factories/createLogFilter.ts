@@ -2,13 +2,13 @@ import {
   matchObject,
 } from 'searchjs';
 import split from 'split2';
-import type {
-  LogFilterConfigurationType,
-} from '../types';
 import {
   formatInvalidInputMessage,
   isRoarrLine,
 } from '../utilities';
+import type {
+  LogFilterConfigurationType,
+} from '../types';
 
 export const createLogFilter = (configuration: LogFilterConfigurationType) => {
   let lastLinePrinterLinesAgo = 0;
@@ -54,7 +54,7 @@ export const createLogFilter = (configuration: LogFilterConfigurationType) => {
 
     try {
       return filterLog(line);
-    } catch (error) {
+    } catch (error: any) {
       return formatInvalidInputMessage(
         configuration.chalk,
         error,
