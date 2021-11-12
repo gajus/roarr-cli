@@ -1,4 +1,7 @@
 import prettyjson from 'prettyjson';
+import {
+  getLogLevelName,
+} from 'roarr';
 import type {
   Message,
 } from 'roarr';
@@ -11,31 +14,16 @@ import {
   isRoarrLine,
 } from '../utilities';
 
-/* eslint-disable quote-props */
-const logLevels = {
-  '10': 'TRACE',
-  '20': 'DEBUG',
-  '30': 'INFO',
-  '40': 'WARN',
-  '50': 'ERROR',
-  '60': 'FATAL',
-};
-/* eslint-enable */
-
 export const createLogFormatter = (configuration: LogFormatterConfigurationType) => {
   const chalk = configuration.chalk;
 
   const logLevelColorMap = {
-    DEBUG: chalk.gray,
-    ERROR: chalk.red,
-    FATAL: chalk.red,
-    INFO: chalk.cyan,
-    TRACE: chalk.gray,
-    WARN: chalk.yellow,
-  };
-
-  const getLogLevelName = (logLevel: number): string => {
-    return logLevels[logLevel] || 'INFO';
+    debug: chalk.gray,
+    error: chalk.red,
+    fatal: chalk.red,
+    info: chalk.cyan,
+    trace: chalk.gray,
+    warn: chalk.yellow,
   };
 
   const formatMessage = (message: Message): string => {
