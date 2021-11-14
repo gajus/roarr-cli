@@ -21,9 +21,9 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "es6-error": "^4.1.1",
-    "liqe": "^1.2.1",
+    "liqe": "^1.13.0",
     "prettyjson": "^1.2.1",
-    "roarr": "^7.6.0",
+    "roarr": "^7.7.0",
     "socket.io-client": "^4.3.2",
     "split2": "^4.1.0",
     "throttle-debounce": "^3.0.1",
