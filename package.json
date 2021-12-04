@@ -19,7 +19,7 @@
     "roarr": "dist/src/bin/index.js"
   },
   "dependencies": {
-    "chalk": "^5.0.0",
+    "chalk": "^4.0.0",
     "es6-error": "^4.1.1",
     "liqe": "^1.13.0",
     "prettyjson": "^1.2.1",
