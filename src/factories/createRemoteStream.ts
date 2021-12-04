@@ -24,6 +24,7 @@ export const createRemoteStream = (
   let streamConfiguration: StreamConfiguration;
 
   const socket = io(apiUrl, {
+    autoUnref: true,
     query: {
       hostname: os.hostname(),
       name: name || '',
