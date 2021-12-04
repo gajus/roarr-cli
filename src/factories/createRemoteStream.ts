@@ -5,9 +5,6 @@ import {
 import {
   throttle,
 } from 'throttle-debounce';
-import {
-  v4 as uuid,
-} from 'uuid';
 
 type StreamConfiguration = {
   enabled: boolean,
@@ -16,6 +13,7 @@ type StreamConfiguration = {
 export const createRemoteStream = (
   apiUrl: string,
   apiKey: string,
+  streamId: string,
   name: string,
   tags: string,
 ) => {
@@ -26,7 +24,7 @@ export const createRemoteStream = (
     query: {
       hostname: os.hostname(),
       name: name || '',
-      stream: uuid(),
+      stream: streamId,
       tags: tags || '',
       token: apiKey,
       version: '1.0.0',

@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
-/* eslint-disable node/shebang */
-
 import {
   Instance as Chalk,
 } from 'chalk';
 import split from 'split2';
+import {
+  v4 as uuid,
+} from 'uuid';
 import yargs from 'yargs';
 import {
   createLogFilter,
@@ -65,6 +66,10 @@ const argv = yargs
       ],
       default: 'pretty',
     },
+    'stream-id': {
+      description: 'roarr.io stream ID.',
+      type: 'string',
+    },
     tags: {
       description: 'List of (comma separated) tags. Used by roarr.io to identify the source of logs.',
       type: 'string',
@@ -79,15 +84,15 @@ const argv = yargs
   .wrap(80)
   .parseSync();
 
+const UuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$/ui;
+
 const roarrConfigurationPath = findNearestRoarrConfigurationPath();
 
 let filterFunction: FilterFunction | null = null;
 
 if (roarrConfigurationPath) {
-  /* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires */
+  // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
   const roarrConfiguration: RoarrConfigurationType = require(roarrConfigurationPath);
-
-  /* eslint-enable @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires */
 
   if (roarrConfiguration?.filterFunction) {
     filterFunction = roarrConfiguration.filterFunction;
@@ -100,10 +105,19 @@ const chalk = new Chalk({
 
 let remoteStream;
 
+if (argv['stream-id'] && !UuidRegex.test(argv['stream-id'])) {
+  throw new Error('stream-id must be a valid UUID');
+}
+
 if (argv['api-key']) {
+  if (!UuidRegex.test(argv['api-key'])) {
+    throw new Error('api-key must be a valid UUID');
+  }
+
   remoteStream = createRemoteStream(
     argv['api-url'],
-    String(argv['api-key']),
+    argv['api-key'],
+    argv['stream-id'] ?? uuid(),
     argv.name ?? '',
     argv.tags ?? '',
   );

@@ -5,8 +5,8 @@ node_modules
 .*
 !.editorconfig
 !.eslintignore
+!.eslintrc
 !.eslintrc.js
-!.flowconfig
 !.github
 !.gitignore
 !.husky

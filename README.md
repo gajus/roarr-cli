@@ -49,6 +49,12 @@ export ROARR_API_KEY=00000000-0000-0000-0000-000000000000
 
 View logs by opening `https://roarr.io?room=[YOUR API KEY]`.
 
+By default, every time you run `roarr` it will generate a new stream ID and it will appear as a new source in roarr.io. However, you can configure a stable stream ID, e.g.
+
+```bash
+export ROARR_STREAM_ID=00000000-0000-0000-0000-000000000000
+```
+
 #### Identifying Log Source
 
 By default, all `@roarr/cli` agents are assigned a random name.
