@@ -39,13 +39,17 @@ export const createRemoteStream = (
     streamConfiguration = nextStreamConfiguration;
   });
 
+  const flush = () => {
+    socket.emit('messages', buffer.join('\n'));
+
+    buffer = [];
+  };
+
   const emit = throttle(
     100,
     false,
     () => {
-      socket.emit('messages', buffer.join('\n'));
-
-      buffer = [];
+      flush();
     },
   );
 
