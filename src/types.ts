@@ -26,3 +26,7 @@ export type LogFormatterConfigurationType = {
   readonly outputFormat: 'json' | 'pretty',
   readonly useColors: boolean,
 };
+
+export type RemoteStream = {
+  emit: (message: string) => void,
+};

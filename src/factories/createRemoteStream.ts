@@ -5,6 +5,9 @@ import {
 import {
   throttle,
 } from 'throttle-debounce';
+import type {
+  RemoteStream,
+} from '../types';
 
 type StreamConfiguration = {
   enabled: boolean,
@@ -16,7 +19,7 @@ export const createRemoteStream = (
   streamId: string,
   name: string,
   tags: string,
-) => {
+): RemoteStream => {
   let buffer: string[] = [];
   let streamConfiguration: StreamConfiguration;
 

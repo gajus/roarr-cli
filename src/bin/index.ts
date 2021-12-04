@@ -16,6 +16,7 @@ import {
 import type {
   FilterFunction,
   RoarrConfigurationType,
+  RemoteStream,
 } from '../types';
 import {
   findNearestRoarrConfigurationPath,
@@ -103,7 +104,7 @@ const chalk = new Chalk({
   level: argv['use-colors'] ? 3 : 0,
 });
 
-let remoteStream;
+let remoteStream: RemoteStream;
 
 if (argv['stream-id'] && !UuidRegex.test(argv['stream-id'])) {
   throw new Error('stream-id must be a valid UUID');
