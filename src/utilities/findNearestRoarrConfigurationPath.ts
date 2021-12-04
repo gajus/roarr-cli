@@ -1,7 +1,7 @@
 /* eslint-disable node/no-sync */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import {
   RoarrError,
 } from '../errors';
@@ -9,6 +9,7 @@ import {
 export const findNearestRoarrConfigurationPath = (startPath: string = process.cwd()): string | null => {
   let currentPath = startPath;
 
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     const roarrConfigurationPath = path.join(currentPath, '.roarr.js');
 

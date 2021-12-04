@@ -57,7 +57,7 @@ export const createLogFilter = (configuration: LogFilterConfigurationType) => {
 
     try {
       return filterLog(line);
-    } catch (error: any) {
+    } catch (error) {
       return formatInvalidInputMessage(
         configuration.chalk,
         error,

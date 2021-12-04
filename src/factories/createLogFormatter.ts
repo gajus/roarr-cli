@@ -15,7 +15,7 @@ import {
 } from '../utilities';
 
 export const createLogFormatter = (configuration: LogFormatterConfigurationType) => {
-  const chalk = configuration.chalk;
+  const {chalk} = configuration;
 
   const logLevelColorMap = {
     debug: chalk.gray,
@@ -85,7 +85,7 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
 
     try {
       return formatMessage(JSON.parse(line));
-    } catch (error: any) {
+    } catch (error) {
       return formatInvalidInputMessage(chalk, error, line);
     }
   });
