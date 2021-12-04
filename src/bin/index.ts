@@ -157,3 +157,9 @@ if (argv['output-format'] === 'pretty') {
 
 stream.pipe(process.stdout);
 
+process.on('SIGINT', () => {
+  setTimeout(() => {
+    // eslint-disable-next-line node/no-process-exit
+    process.exit();
+  }, 250);
+});
