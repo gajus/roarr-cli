@@ -9,6 +9,10 @@ import {
   v4 as uuid,
 } from 'uuid';
 
+type StreamConfiguration = {
+  enabled: boolean,
+};
+
 export const createRemoteStream = (
   apiUrl: string,
   apiKey: string,
@@ -16,7 +20,7 @@ export const createRemoteStream = (
   tags: string,
 ) => {
   let buffer: string[] = [];
-  let streamConfiguration;
+  let streamConfiguration: StreamConfiguration;
 
   const socket = io(apiUrl, {
     query: {
