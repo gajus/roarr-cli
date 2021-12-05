@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 
+import crypto from 'node:crypto';
 import {
   Instance as Chalk,
 } from 'chalk';
 import split from 'split2';
-import {
-  v4 as uuid,
-} from 'uuid';
 import yargs from 'yargs';
 import {
   createLogFilter,
@@ -92,7 +90,7 @@ const roarrConfigurationPath = findNearestRoarrConfigurationPath();
 let filterFunction: FilterFunction | null = null;
 
 if (roarrConfigurationPath) {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
   const roarrConfiguration: RoarrConfigurationType = require(roarrConfigurationPath);
 
   if (roarrConfiguration?.filterFunction) {
@@ -118,7 +116,7 @@ if (argv['api-key']) {
   remoteStream = createRemoteStream(
     argv['api-url'],
     argv['api-key'],
-    argv['stream-id'] ?? uuid(),
+    argv['stream-id'] ?? crypto.randomUUID(),
     argv.name ?? '',
     argv.tags ?? '',
   );
