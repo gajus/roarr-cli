@@ -26,7 +26,6 @@
     "roarr": "^7.8.0",
     "socket.io-client": "^4.4.0",
     "split2": "^4.1.0",
-    "throttle-debounce": "^3.0.1",
     "yargs": "^17.3.0"
   },
   "description": "A CLI program for Roarr logger.",

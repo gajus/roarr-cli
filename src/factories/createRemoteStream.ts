@@ -2,9 +2,6 @@ import os from 'node:os';
 import {
   io,
 } from 'socket.io-client';
-import {
-  throttle,
-} from 'throttle-debounce';
 import type {
   RemoteStream,
 } from '../types';
@@ -39,19 +36,11 @@ export const createRemoteStream = (
     streamConfiguration = nextStreamConfiguration;
   });
 
-  const flush = () => {
+  setInterval(() => {
     socket.emit('messages', buffer.join('\n'));
 
     buffer = [];
-  };
-
-  const emit = throttle(
-    100,
-    false,
-    () => {
-      flush();
-    },
-  );
+  }, 100).unref();
 
   return {
     emit: (message: string) => {
@@ -60,8 +49,6 @@ export const createRemoteStream = (
       }
 
       buffer.push(message);
-
-      emit();
     },
   };
 };
