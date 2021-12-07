@@ -37,9 +37,11 @@ export const createRemoteStream = (
   });
 
   setInterval(() => {
-    socket.emit('messages', buffer.join('\n'));
+    if (buffer.length > 0) {
+      socket.emit('messages', buffer.join('\n'));
 
-    buffer = [];
+      buffer = [];
+    }
   }, 100).unref();
 
   return {
