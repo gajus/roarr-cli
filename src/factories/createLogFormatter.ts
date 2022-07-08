@@ -15,7 +15,9 @@ import {
 } from '../utilities';
 
 export const createLogFormatter = (configuration: LogFormatterConfigurationType) => {
-  const {chalk} = configuration;
+  const {
+    chalk,
+  } = configuration;
 
   const logLevelColorMap = {
     debug: chalk.gray,

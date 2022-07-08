@@ -12,7 +12,9 @@ module.exports = {
       },
     },
     {
-      extends: ['canonical'],
+      extends: [
+        'canonical',
+      ],
       files: '*.js',
     },
   ],
