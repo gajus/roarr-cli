@@ -124,7 +124,7 @@ The "pretty" format relies on logs using the context property names suggested in
 
 ## Roarr configuration file
 
-Roarr searches the current working directory for `.roarr.js` file. If it cannot find the configuration file, it will traverse upwards the directory tree searching for a matching configuration file and give up on a first permission error.
+Roarr searches the current working directory for `.roarr.js` (or `.roarr.cjs`) file. If it cannot find the configuration file, it will traverse upwards the directory tree searching for a matching configuration file and give up on a first permission error.
 
 `.roarr.js` is a JavaScript file that exports an object that defines properties used to configure Roarr, e.g.
 

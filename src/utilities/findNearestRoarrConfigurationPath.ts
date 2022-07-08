@@ -6,12 +6,12 @@ import {
   RoarrError,
 } from '../errors';
 
-export const findNearestRoarrConfigurationPath = (startPath: string = process.cwd()): string | null => {
+export const findNearestRoarrConfigurationPath = (fileName: string, startPath: string = process.cwd()): string | null => {
   let currentPath = startPath;
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const roarrConfigurationPath = path.join(currentPath, '.roarr.js');
+    const roarrConfigurationPath = path.join(currentPath, fileName);
 
     try {
       fs.accessSync(roarrConfigurationPath, fs.constants.F_OK);
@@ -32,7 +32,7 @@ export const findNearestRoarrConfigurationPath = (startPath: string = process.cw
 
       return roarrConfigurationPath;
     } catch {
-      throw new RoarrError('Found .roarr.js but do not have read permission.');
+      throw new RoarrError('Found ' + fileName + ' but do not have read permission.');
     }
   }
 
