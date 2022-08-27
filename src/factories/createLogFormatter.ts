@@ -49,6 +49,10 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
       formattedMessage += ' (@' + String(message.context.package) + ')';
     }
 
+    if (message.context.program) {
+      formattedMessage += ' (%' + String(message.context.program) + ')';
+    }
+
     if (message.context.namespace) {
       formattedMessage += ' (#' + String(message.context.namespace) + ')';
     }
@@ -64,7 +68,7 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
         logLevel: temporary3,
         namespace: temporary4,
         package: temporary5,
-        package: temporary6,
+        program: temporary6,
         ...rest
       } = message.context;
 
