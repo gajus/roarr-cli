@@ -42,7 +42,11 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
         throw new Error('Unexpected state.');
       }
 
-      formattedMessage += ' ' + logLevelColorName(logLevelName + ' (' + String(message.context.logLevel) + ')');
+      if (message.context.logLevel % 10 === 0) {
+        formattedMessage += ' ' + logLevelColorName(logLevelName);
+      } else {
+        formattedMessage += ' ' + logLevelColorName(logLevelName + ' (' + String(message.context.logLevel) + ')');
+      }
     }
 
     if (message.context.package) {
