@@ -17,6 +17,7 @@ import {
 export const createLogFormatter = (configuration: LogFormatterConfigurationType) => {
   const {
     chalk,
+    includeDate,
   } = configuration;
 
   const logLevelColorMap = {
@@ -31,7 +32,11 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
   const formatMessage = (message: Message): string => {
     let formattedMessage = '';
 
-    formattedMessage = '[' + new Date(message.time).toISOString() + ']';
+    if (includeDate) {
+      formattedMessage = '[' + new Date(message.time).toISOString() + ']';
+    } else {
+      formattedMessage = '[' + new Date().toISOString().slice(11, -1) + ']';
+    }
 
     if (message.context.logLevel && typeof message.context.logLevel === 'number') {
       const logLevelName = getLogLevelName(message.context.logLevel);
@@ -50,15 +55,15 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
     }
 
     if (message.context.package) {
-      formattedMessage += ' (@' + String(message.context.package) + ')';
+      formattedMessage += ' @' + String(message.context.package);
     }
 
     if (message.context.program) {
-      formattedMessage += ' (%' + String(message.context.program) + ')';
+      formattedMessage += ' %' + String(message.context.program);
     }
 
     if (message.context.namespace) {
-      formattedMessage += ' (#' + String(message.context.namespace) + ')';
+      formattedMessage += ' #' + String(message.context.namespace);
     }
 
     formattedMessage += ': ' + message.message + '\n';

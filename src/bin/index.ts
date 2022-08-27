@@ -49,6 +49,10 @@ const argv = yargs
       description: 'When filtering, print a number of lines leading the match.',
       type: 'number',
     },
+    'include-date': {
+      default: false,
+      description: 'Includes date in pretty output format. By default, date is not included.',
+    },
     lag: {
       default: 0,
       description: 'When filtering, print a number of lines trailing the match.',
@@ -148,6 +152,7 @@ if (argv.filter || filterFunction) {
 if (argv['output-format'] === 'pretty') {
   stream = stream.pipe(createLogFormatter({
     chalk,
+    includeDate: argv['include-date'],
     outputFormat: argv['output-format'],
     useColors: argv['use-colors'],
   }));

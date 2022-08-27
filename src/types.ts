@@ -23,6 +23,7 @@ export type LogFilterConfigurationType = {
 
 export type LogFormatterConfigurationType = {
   readonly chalk: Chalk,
+  readonly includeDate: boolean,
   readonly outputFormat: 'json' | 'pretty',
   readonly useColors: boolean,
 };
