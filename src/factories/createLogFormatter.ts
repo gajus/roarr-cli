@@ -35,7 +35,7 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
     if (includeDate) {
       formattedMessage = '[' + new Date(message.time).toISOString() + ']';
     } else {
-      formattedMessage = '[' + new Date().toISOString().slice(11, -1) + ']';
+      formattedMessage = '[' + new Date(message.time).toISOString().slice(11, -1) + ']';
     }
 
     if (message.context.logLevel && typeof message.context.logLevel === 'number') {
