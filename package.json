@@ -21,7 +21,7 @@
   "dependencies": {
     "chalk": "^4.0.0",
     "es6-error": "^4.1.1",
-    "liqe": "^1.13.0",
+    "liqe": "^3.6.0",
     "prettyjson": "^1.2.1",
     "roarr": "^7.8.0",
     "socket.io-client": "^4.4.0",
