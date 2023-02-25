@@ -43,7 +43,7 @@ export const formatMessage = (
   if (lastMessageTime) {
     formattedMessage +=
       ' ' +
-      chalk.yellow(
+      chalk.gray(
         prettyMilliseconds(message.time - lastMessageTime, {
           compact: true,
         }).padStart(5),
