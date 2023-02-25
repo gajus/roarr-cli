@@ -5,16 +5,12 @@ module.exports = {
         'canonical',
         'canonical/node',
         'canonical/typescript',
+        'canonical/prettier',
       ],
       files: '*.ts',
-      parserOptions: {
-        project: './tsconfig.json',
-      },
     },
     {
-      extends: [
-        'canonical',
-      ],
+      extends: ['canonical', 'canonical/node', 'canonical/prettier'],
       files: '*.js',
     },
   ],

@@ -1,12 +1,13 @@
 /* eslint-disable node/no-sync */
 
+import { RoarrError } from '../errors';
 import fs from 'node:fs';
 import path from 'node:path';
-import {
-  RoarrError,
-} from '../errors';
 
-export const findNearestRoarrConfigurationPath = (fileName: string, startPath: string = process.cwd()): string | null => {
+export const findNearestRoarrConfigurationPath = (
+  fileName: string,
+  startPath: string = process.cwd(),
+): string | null => {
   let currentPath = startPath;
 
   // eslint-disable-next-line no-constant-condition
@@ -32,7 +33,9 @@ export const findNearestRoarrConfigurationPath = (fileName: string, startPath: s
 
       return roarrConfigurationPath;
     } catch {
-      throw new RoarrError('Found ' + fileName + ' but do not have read permission.');
+      throw new RoarrError(
+        'Found ' + fileName + ' but do not have read permission.',
+      );
     }
   }
 

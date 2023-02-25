@@ -1,13 +1,9 @@
+import { type RemoteStream } from '../types';
 import os from 'node:os';
-import {
-  io,
-} from 'socket.io-client';
-import type {
-  RemoteStream,
-} from '../types';
+import { io } from 'socket.io-client';
 
 type StreamConfiguration = {
-  enabled: boolean,
+  enabled: boolean;
 };
 
 export const createRemoteStream = (
@@ -46,7 +42,7 @@ export const createRemoteStream = (
 
   return {
     emit: (message: string) => {
-      if (!streamConfiguration || !streamConfiguration.enabled) {
+      if (!streamConfiguration?.enabled) {
         return;
       }
 

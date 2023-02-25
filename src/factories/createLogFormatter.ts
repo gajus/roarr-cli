@@ -1,24 +1,14 @@
+import { type LogFormatterConfigurationType } from '../types';
+import { formatInvalidInputMessage, isRoarrLine } from '../utilities';
 import prettyjson from 'prettyjson';
-import {
-  getLogLevelName,
-} from 'roarr';
-import type {
-  Message,
-} from 'roarr';
+import { type Message } from 'roarr';
+import { getLogLevelName } from 'roarr';
 import split from 'split2';
-import type {
-  LogFormatterConfigurationType,
-} from '../types';
-import {
-  formatInvalidInputMessage,
-  isRoarrLine,
-} from '../utilities';
 
-export const createLogFormatter = (configuration: LogFormatterConfigurationType) => {
-  const {
-    chalk,
-    includeDate,
-  } = configuration;
+export const createLogFormatter = (
+  configuration: LogFormatterConfigurationType,
+) => {
+  const { chalk, includeDate } = configuration;
 
   const logLevelColorMap = {
     debug: chalk.gray,
@@ -35,10 +25,14 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
     if (includeDate) {
       formattedMessage = '[' + new Date(message.time).toISOString() + ']';
     } else {
-      formattedMessage = '[' + new Date(message.time).toISOString().slice(11, -1) + ']';
+      formattedMessage =
+        '[' + new Date(message.time).toISOString().slice(11, -1) + ']';
     }
 
-    if (message.context.logLevel && typeof message.context.logLevel === 'number') {
+    if (
+      message.context.logLevel &&
+      typeof message.context.logLevel === 'number'
+    ) {
       const logLevelName = getLogLevelName(message.context.logLevel);
 
       const logLevelColorName = logLevelColorMap[logLevelName];
@@ -50,7 +44,11 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
       if (message.context.logLevel % 10 === 0) {
         formattedMessage += ' ' + logLevelColorName(logLevelName);
       } else {
-        formattedMessage += ' ' + logLevelColorName(logLevelName + ' (' + String(message.context.logLevel) + ')');
+        formattedMessage +=
+          ' ' +
+          logLevelColorName(
+            logLevelName + ' (' + String(message.context.logLevel) + ')',
+          );
       }
     }
 
@@ -84,9 +82,12 @@ export const createLogFormatter = (configuration: LogFormatterConfigurationType)
       /* eslint-enable @typescript-eslint/no-unused-vars */
 
       if (Object.keys(rest).length) {
-        formattedMessage += String(prettyjson.render(rest, {
-          noColor: !configuration.useColors,
-        })) + '\n\n';
+        formattedMessage +=
+          String(
+            prettyjson.render(rest, {
+              noColor: !configuration.useColors,
+            }),
+          ) + '\n\n';
       }
     }
 

@@ -1,32 +1,28 @@
 #!/usr/bin/env node
 
-import crypto from 'node:crypto';
-import {
-  Instance as Chalk,
-} from 'chalk';
-import split from 'split2';
-import yargs from 'yargs';
 import {
   createLogFilter,
   createLogFormatter,
   createRemoteStream,
 } from '../factories';
-import type {
-  FilterFunction,
-  RoarrConfigurationType,
-  RemoteStream,
-} from '../types';
 import {
-  findNearestRoarrConfigurationPath,
-  isRoarrLine,
-} from '../utilities';
+  type FilterFunction,
+  type RemoteStream,
+  type RoarrConfigurationType,
+} from '../types';
+import { findNearestRoarrConfigurationPath, isRoarrLine } from '../utilities';
+import { Instance as Chalk } from 'chalk';
+import crypto from 'node:crypto';
+import split from 'split2';
+import yargs from 'yargs';
 
 const argv = yargs
   .env('ROARR')
   .usage('Filters and formats Roarr log message.')
   .options({
     'api-key': {
-      description: 'roarr.io API key. Configuring API key automatically streams logs to roarr.io service.',
+      description:
+        'roarr.io API key. Configuring API key automatically streams logs to roarr.io service.',
       type: 'string',
     },
     'api-url': {
@@ -37,7 +33,8 @@ const argv = yargs
     },
     'exclude-alien': {
       default: false,
-      description: 'Excludes messages that cannot be recognized as Roarr log message.',
+      description:
+        'Excludes messages that cannot be recognized as Roarr log message.',
       type: 'boolean',
     },
     filter: {
@@ -51,22 +48,22 @@ const argv = yargs
     },
     'include-date': {
       default: false,
-      description: 'Includes date in pretty output format. By default, date is not included.',
+      description:
+        'Includes date in pretty output format. By default, date is not included.',
     },
     lag: {
       default: 0,
-      description: 'When filtering, print a number of lines trailing the match.',
+      description:
+        'When filtering, print a number of lines trailing the match.',
       type: 'number',
     },
     name: {
-      description: 'Name of the application. Used by roarr.io to identify the source of logs.',
+      description:
+        'Name of the application. Used by roarr.io to identify the source of logs.',
       type: 'string',
     },
     'output-format': {
-      choices: [
-        'pretty',
-        'json',
-      ],
+      choices: ['pretty', 'json'],
       default: 'pretty',
     },
     'stream-id': {
@@ -74,7 +71,8 @@ const argv = yargs
       type: 'string',
     },
     tags: {
-      description: 'List of (comma separated) tags. Used by roarr.io to identify the source of logs.',
+      description:
+        'List of (comma separated) tags. Used by roarr.io to identify the source of logs.',
       type: 'string',
     },
     'use-colors': {
@@ -87,9 +85,12 @@ const argv = yargs
   .wrap(80)
   .parseSync();
 
-const UuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$/ui;
+const UuidRegex =
+  /^[\da-f]{8}-[\da-f]{4}-[1-5][\da-f]{3}-[\da-f]{4}-[\da-f]{12}$/iu;
 
-const roarrConfigurationPath = findNearestRoarrConfigurationPath('.roarr.cjs') ?? findNearestRoarrConfigurationPath('.roarr.js');
+const roarrConfigurationPath =
+  findNearestRoarrConfigurationPath('.roarr.cjs') ??
+  findNearestRoarrConfigurationPath('.roarr.js');
 
 let filterFunction: FilterFunction | null = null;
 
@@ -126,8 +127,8 @@ if (argv['api-key']) {
   );
 }
 
-let stream = process.stdin
-  .pipe(split((line) => {
+let stream = process.stdin.pipe(
+  split((line) => {
     if (remoteStream) {
       remoteStream.emit(line);
     }
@@ -137,25 +138,30 @@ let stream = process.stdin
     }
 
     return line + '\n';
-  }));
+  }),
+);
 
 if (argv.filter || filterFunction) {
-  stream = stream.pipe(createLogFilter({
-    chalk,
-    filterExpression: argv.filter ?? null,
-    filterFunction,
-    head: argv.head,
-    lag: argv.lag,
-  }));
+  stream = stream.pipe(
+    createLogFilter({
+      chalk,
+      filterExpression: argv.filter ?? null,
+      filterFunction,
+      head: argv.head,
+      lag: argv.lag,
+    }),
+  );
 }
 
 if (argv['output-format'] === 'pretty') {
-  stream = stream.pipe(createLogFormatter({
-    chalk,
-    includeDate: argv['include-date'],
-    outputFormat: argv['output-format'],
-    useColors: argv['use-colors'],
-  }));
+  stream = stream.pipe(
+    createLogFormatter({
+      chalk,
+      includeDate: argv['include-date'],
+      outputFormat: argv['output-format'],
+      useColors: argv['use-colors'],
+    }),
+  );
 }
 
 stream.pipe(process.stdout);
