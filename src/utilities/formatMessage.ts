@@ -1,4 +1,5 @@
 import { type Chalk } from 'chalk';
+import prettyMilliseconds from 'pretty-ms';
 import prettyjson from 'prettyjson';
 import { type Message } from 'roarr';
 import { getLogLevelName } from 'roarr';
@@ -32,6 +33,10 @@ export const formatMessage = (
     formattedMessage =
       '[' + new Date(message.time).toISOString().slice(11, -1) + ']';
   }
+
+  formattedMessage += chalk.yellow(
+    prettyMilliseconds(1, { compact: true }).padStart(5),
+  );
 
   if (
     message.context.logLevel &&
