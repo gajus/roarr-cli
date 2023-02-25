@@ -49,7 +49,7 @@ export const formatMessage = (
         }).padStart(5),
       );
   } else {
-    formattedMessage += ' '.repeat(5);
+    formattedMessage += ' '.repeat(6);
   }
 
   if (
