@@ -21,18 +21,35 @@ export const createLogFormatter = (
   };
 
   return split((line) => {
-    if (!findRoarrMessageLocation(line)) {
+    const messageLocation = findRoarrMessageLocation(line);
+
+    if (!messageLocation) {
       return line + '\n';
     }
 
+    const head = line.slice(0, messageLocation.start);
+    const body = line.slice(
+      messageLocation.start,
+      messageLocation.start + messageLocation.end,
+    );
+    const tail = line.slice(messageLocation.end);
+
+    let formattedMessage: string;
+
     try {
-      return formatMessage(JSON.parse(line), {
+      formattedMessage = formatMessage(JSON.parse(body), {
         includeDate,
         logLevelColorMap,
         useColors,
       });
     } catch (error) {
-      return formatInvalidInputMessage(chalk, error, line);
+      formattedMessage = formatInvalidInputMessage(chalk, error, body);
     }
+
+    if (messageLocation.start === 0) {
+      return formattedMessage;
+    }
+
+    return head + formattedMessage + tail;
   });
 };

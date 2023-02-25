@@ -7,14 +7,16 @@ export const findRoarrMessageLocation = (
     return null;
   }
 
-  const endIndex = text.indexOf('"version":"2.0.0"}');
+  const END = '"version":"2.0.0"}';
+
+  const endIndex = text.indexOf(END);
 
   if (endIndex === -1) {
     return null;
   }
 
   return {
-    end: endIndex,
+    end: endIndex + END.length,
     start: startIndex,
   };
 };
