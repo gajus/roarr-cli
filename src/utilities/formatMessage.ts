@@ -67,12 +67,15 @@ export const formatMessage = (
     }
 
     if (message.context.logLevel % 10 === 0) {
-      formattedMessage += ' ' + logLevelColorName(logLevelName);
+      formattedMessage += ' ' + logLevelColorName(logLevelName.padEnd(5));
     } else {
       formattedMessage +=
         ' ' +
         logLevelColorName(
-          logLevelName + ' (' + String(message.context.logLevel) + ')',
+          logLevelName.padEnd(5) +
+            ' (' +
+            String(message.context.logLevel) +
+            ')',
         );
     }
   }
