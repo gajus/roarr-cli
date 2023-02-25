@@ -33,7 +33,9 @@ export const formatMessage = (
   ) {
     const logLevelName = getLogLevelName(message.context.logLevel);
 
-    const logLevelColorName = logLevelColorMap[logLevelName];
+    const logLevelColorName = useColors
+      ? logLevelColorMap[logLevelName]
+      : (text: string) => text;
 
     if (!logLevelColorName) {
       throw new Error('Unexpected state.');

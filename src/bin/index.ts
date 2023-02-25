@@ -10,7 +10,10 @@ import {
   type RemoteStream,
   type RoarrConfigurationType,
 } from '../types';
-import { findNearestRoarrConfigurationPath, isRoarrLine } from '../utilities';
+import {
+  findNearestRoarrConfigurationPath,
+  findRoarrMessageLocation,
+} from '../utilities';
 import { Instance as Chalk } from 'chalk';
 import crypto from 'node:crypto';
 import split from 'split2';
@@ -133,7 +136,7 @@ let stream = process.stdin.pipe(
       remoteStream.emit(line);
     }
 
-    if (!isRoarrLine(line)) {
+    if (!findRoarrMessageLocation(line)) {
       return argv.excludeAlien ? '' : line + '\n';
     }
 
