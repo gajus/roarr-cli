@@ -11,6 +11,8 @@ export const createLogFormatter = (
 ) => {
   const { chalk, includeDate, useColors } = configuration;
 
+  let lastMessageTime: number;
+
   return split((line) => {
     const messageLocation = findRoarrMessageLocation(line);
 
@@ -28,11 +30,16 @@ export const createLogFormatter = (
     let formattedMessage: string;
 
     try {
-      formattedMessage = formatMessage(JSON.parse(body), {
+      const parsedMessage = JSON.parse(body);
+
+      formattedMessage = formatMessage(parsedMessage, {
         chalk,
         includeDate,
+        lastMessageTime,
         useColors,
       });
+
+      lastMessageTime = parsedMessage.time;
     } catch (error) {
       formattedMessage = formatInvalidInputMessage(chalk, error, body);
     }

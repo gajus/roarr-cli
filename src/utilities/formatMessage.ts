@@ -7,12 +7,14 @@ import { getLogLevelName } from 'roarr';
 export const formatMessage = (
   message: Message,
   {
+    lastMessageTime,
     includeDate,
     useColors,
     chalk,
   }: {
     chalk: Chalk;
     includeDate: boolean;
+    lastMessageTime?: number;
     useColors: boolean;
   },
 ): string => {
@@ -38,9 +40,15 @@ export const formatMessage = (
       '[' + new Date(message.time).toISOString().slice(11, -1) + ']';
   }
 
-  formattedMessage += chalk.yellow(
-    prettyMilliseconds(1, { compact: true }).padStart(5),
-  );
+  if (lastMessageTime) {
+    formattedMessage += chalk.yellow(
+      prettyMilliseconds(message.time - lastMessageTime, {
+        compact: true,
+      }).padStart(6),
+    );
+  } else {
+    formattedMessage += ' '.repeat(6);
+  }
 
   if (
     message.context.logLevel &&
