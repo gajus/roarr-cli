@@ -1,23 +1,29 @@
+import { type Chalk } from 'chalk';
 import prettyjson from 'prettyjson';
-import { type LogLevelName, type Message } from 'roarr';
+import { type Message } from 'roarr';
 import { getLogLevelName } from 'roarr';
-
-type LogLevelColorMap = {
-  [K in LogLevelName]: (message: string) => string;
-};
 
 export const formatMessage = (
   message: Message,
   {
     includeDate,
-    logLevelColorMap,
     useColors,
+    chalk,
   }: {
+    chalk: Chalk;
     includeDate: boolean;
-    logLevelColorMap: LogLevelColorMap;
     useColors: boolean;
   },
 ): string => {
+  const logLevelColorMap = {
+    debug: chalk.gray,
+    error: chalk.red,
+    fatal: chalk.red,
+    info: chalk.cyan,
+    trace: chalk.gray,
+    warn: chalk.yellow,
+  };
+
   let formattedMessage = '';
 
   if (includeDate) {

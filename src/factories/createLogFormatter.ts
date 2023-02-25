@@ -11,15 +11,6 @@ export const createLogFormatter = (
 ) => {
   const { chalk, includeDate, useColors } = configuration;
 
-  const logLevelColorMap = {
-    debug: chalk.gray,
-    error: chalk.red,
-    fatal: chalk.red,
-    info: chalk.cyan,
-    trace: chalk.gray,
-    warn: chalk.yellow,
-  };
-
   return split((line) => {
     const messageLocation = findRoarrMessageLocation(line);
 
@@ -38,8 +29,8 @@ export const createLogFormatter = (
 
     try {
       formattedMessage = formatMessage(JSON.parse(body), {
+        chalk,
         includeDate,
-        logLevelColorMap,
         useColors,
       });
     } catch (error) {
