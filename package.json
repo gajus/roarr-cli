@@ -15,6 +15,9 @@
       "ts-node/register/transpile-only"
     ]
   },
+  "files": [
+    "./dist"
+  ],
   "bin": {
     "roarr": "dist/src/bin/index.js"
   },

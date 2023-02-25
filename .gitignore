@@ -3,15 +3,11 @@ dist
 node_modules
 *.log
 .*
-!.editorconfig
-!.eslintignore
-!.eslintrc
 !.eslintrc.js
 !.github
 !.gitignore
 !.husky
 !.lintstagedrc
-!.npmignore
 !.nycrc
 !.README
 !.releaserc
