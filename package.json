@@ -14,7 +14,7 @@
     "chalk": "^4.0.0",
     "es6-error": "^4.1.1",
     "liqe": "^3.6.0",
-    "pretty-ms": "^8.0.0",
+    "pretty-ms": "^7.0.0",
     "prettyjson": "^1.2.5",
     "roarr": "^7.14.3",
     "socket.io-client": "^4.6.1",
