@@ -41,13 +41,15 @@ export const formatMessage = (
   }
 
   if (lastMessageTime) {
-    formattedMessage += chalk.yellow(
-      prettyMilliseconds(message.time - lastMessageTime, {
-        compact: true,
-      }).padStart(6),
-    );
+    formattedMessage +=
+      ' ' +
+      chalk.yellow(
+        prettyMilliseconds(message.time - lastMessageTime, {
+          compact: true,
+        }).padStart(5),
+      );
   } else {
-    formattedMessage += ' '.repeat(6);
+    formattedMessage += ' '.repeat(5);
   }
 
   if (
