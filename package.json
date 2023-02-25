@@ -20,16 +20,13 @@
     "split2": "^4.1.0",
     "yargs": "^17.7.1"
   },
-  "description": "A CLI program for Roarr logger.",
+  "description": "A CLI program for processing Roarr logs.",
   "devDependencies": {
-    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@semantic-release/commit-analyzer": "^9.0.2",
     "@semantic-release/github": "^8.0.7",
     "@semantic-release/npm": "^9.0.2",
     "@types/split2": "^3.2.1",
     "@types/yargs": "^17.0.7",
-    "coveralls": "^3.1.1",
-    "del-cli": "^4.0.1",
     "eslint": "^8.34.0",
     "eslint-config-canonical": "^40.0.7",
     "husky": "^7.0.4",
@@ -51,7 +48,7 @@
     "url": "git@github.com:gajus/roarr-cli.git"
   },
   "scripts": {
-    "build": "del-cli ./dist && tsc",
+    "build": "rm -fr ./dist && tsc",
     "dev": "tsc --watch",
     "lint": "eslint ./src ./test && tsc --noEmit",
     "test": "vitest"
