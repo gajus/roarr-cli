@@ -8,7 +8,7 @@
     "./dist"
   ],
   "bin": {
-    "roarr": "dist/src/bin/index.js"
+    "roarr": "dist/bin/index.js"
   },
   "dependencies": {
     "chalk": "^4.0.0",
