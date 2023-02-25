@@ -1,5 +1,3 @@
-// @flow
-
 import { type Chalk } from 'chalk';
 import { type Message } from 'roarr';
 
