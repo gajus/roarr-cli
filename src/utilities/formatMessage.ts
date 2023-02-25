@@ -16,6 +16,10 @@ export const formatMessage = (
     useColors: boolean;
   },
 ): string => {
+  if (!useColors) {
+    chalk.level = 0;
+  }
+
   const logLevelColorMap = {
     debug: chalk.gray,
     error: chalk.red,

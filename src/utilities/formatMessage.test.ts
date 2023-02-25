@@ -14,5 +14,5 @@ it('pretty prints Roarr message', () => {
       },
       { chalk, includeDate: true, useColors: false },
     ),
-  ).toBe('[2018-09-27T08:35:07.418Z] debug: foo\n');
+  ).toBe('[2018-09-27T08:35:07.418Z]  1ms debug: foo\n');
 });
