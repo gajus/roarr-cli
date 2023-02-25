@@ -1,5 +1,8 @@
 import { type LogFilterConfigurationType } from '../types';
-import { formatInvalidInputMessage, isRoarrLine } from '../utilities';
+import {
+  findRoarrMessageLocation,
+  formatInvalidInputMessage,
+} from '../utilities';
 import { parse, test } from 'liqe';
 import split from 'split2';
 
@@ -48,7 +51,7 @@ export const createLogFilter = (configuration: LogFilterConfigurationType) => {
   };
 
   return split((line) => {
-    if (!isRoarrLine(line)) {
+    if (!findRoarrMessageLocation(line)) {
       return line + '\n';
     }
 

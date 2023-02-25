@@ -1,5 +1,8 @@
 import { type LogFormatterConfigurationType } from '../types';
-import { formatInvalidInputMessage, isRoarrLine } from '../utilities';
+import {
+  findRoarrMessageLocation,
+  formatInvalidInputMessage,
+} from '../utilities';
 import prettyjson from 'prettyjson';
 import { type Message } from 'roarr';
 import { getLogLevelName } from 'roarr';
@@ -95,7 +98,7 @@ export const createLogFormatter = (
   };
 
   return split((line) => {
-    if (!isRoarrLine(line)) {
+    if (!findRoarrMessageLocation(line)) {
       return line + '\n';
     }
 
