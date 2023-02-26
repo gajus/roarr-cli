@@ -107,8 +107,8 @@ if (roarrConfigurationPath) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
   const roarrConfiguration: RoarrConfigurationType = require(roarrConfigurationPath);
 
-  if (roarrConfiguration?.filterFunction) {
-    filterFunction = roarrConfiguration.filterFunction;
+  if (roarrConfiguration?.filter) {
+    filterFunction = roarrConfiguration.filter;
   }
 }
 

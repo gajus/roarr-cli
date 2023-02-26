@@ -68,14 +68,11 @@ Roarr searches the current working directory for `.roarr.js` (or `.roarr.cjs`) f
 
 ```js
 module.exports = {
-  filterFunction: (message) => {
+  /**
+   * Receives Roarr message object and determines if to keep the log.
+   */
+  filter: (message) => {
     return message.context && message.context.logLevel > 20;
   },
 };
 ```
-
-### Supported Roarr configuration file properties
-
-|Property name|Description|
-|---|---|
-|`filterFunction`|A function that receives Roarr message object and returns a boolean property that determines if the log should be filtered out (`false`) or included (`true`).|
