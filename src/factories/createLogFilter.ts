@@ -46,7 +46,7 @@ const createTailingFilter = (
       lastLinePrinterLinesAgo++;
     }
 
-    return result ? result : null;
+    return result ? result.trim() + '\n' : '';
   };
 };
 
@@ -64,7 +64,7 @@ export const createLogFilter = (configuration: LogFilterConfigurationType) => {
     const messageLocation = findRoarrMessageLocation(line);
 
     if (!messageLocation) {
-      return line + '\n';
+      return line.trimEnd() + '\n';
     }
 
     const tokens = extractRoarrMessage(line, messageLocation);
