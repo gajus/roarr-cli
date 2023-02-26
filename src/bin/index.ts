@@ -65,9 +65,15 @@ const argv = yargs
         'Name of the application. Used by roarr.io to identify the source of logs.',
       type: 'string',
     },
+    omit: {
+      default: [] as readonly string[],
+      description:
+        'Omit properties from the Roarr message, e.g. --omit context.version',
+      type: 'array',
+    },
     'output-format': {
-      choices: ['pretty', 'json'],
-      default: 'pretty',
+      choices: ['pretty', 'json'] as const,
+      default: 'pretty' as const,
     },
     'stream-id': {
       description: 'roarr.io stream ID.',
@@ -156,16 +162,15 @@ if (argv.filter || filterFunction) {
   );
 }
 
-if (argv['output-format'] === 'pretty') {
-  stream = stream.pipe(
-    createLogFormatter({
-      chalk,
-      includeDate: argv['include-date'],
-      outputFormat: argv['output-format'],
-      useColors: argv['use-colors'],
-    }),
-  );
-}
+stream = stream.pipe(
+  createLogFormatter({
+    chalk,
+    includeDate: argv['include-date'],
+    omit: argv['omit'],
+    outputFormat: argv['output-format'],
+    useColors: argv['use-colors'],
+  }),
+);
 
 stream.pipe(process.stdout);
 

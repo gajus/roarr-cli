@@ -1,9 +1,10 @@
-import { type FilterFunction, type LogFilterConfigurationType } from '../types';
+import { type FilterFunction } from '../types';
 import {
   extractRoarrMessage,
   findRoarrMessageLocation,
   formatInvalidInputMessage,
 } from '../utilities';
+import { type Chalk } from 'chalk';
 import { parse, test } from 'liqe';
 import { type Message } from 'roarr';
 import split from 'split2';
@@ -48,7 +49,13 @@ const createTailingFilter = (
   };
 };
 
-export const createLogFilter = (configuration: LogFilterConfigurationType) => {
+export const createLogFilter = (configuration: {
+  readonly chalk: Chalk;
+  readonly filterExpression?: string | null;
+  readonly filterFunction?: FilterFunction | null;
+  readonly head: number;
+  readonly lag: number;
+}) => {
   const query = configuration.filterExpression
     ? parse(configuration.filterExpression)
     : null;

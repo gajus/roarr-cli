@@ -1,17 +1,22 @@
-import { type LogFormatterConfigurationType } from '../types';
 import {
   extractRoarrMessage,
   findRoarrMessageLocation,
   formatInvalidInputMessage,
   formatMessage,
 } from '../utilities';
+import { type Chalk } from 'chalk';
+import { deleteProperty } from 'dot-prop';
 import { type Message } from 'roarr';
 import split from 'split2';
 
-export const createLogFormatter = (
-  configuration: LogFormatterConfigurationType,
-) => {
-  const { chalk, includeDate, useColors } = configuration;
+export const createLogFormatter = (configuration: {
+  readonly chalk: Chalk;
+  readonly includeDate: boolean;
+  readonly omit: readonly string[];
+  readonly outputFormat: 'json' | 'pretty';
+  readonly useColors: boolean;
+}) => {
+  const { chalk, includeDate, useColors, omit } = configuration;
 
   let lastMessageTime: number;
 
@@ -34,6 +39,10 @@ export const createLogFormatter = (
         formatInvalidInputMessage(configuration.chalk, error, tokens.body) +
         tokens.tail
       );
+    }
+
+    for (const path of omit) {
+      deleteProperty(parsedMessage, path);
     }
 
     const formattedMessage = formatMessage(parsedMessage, {
