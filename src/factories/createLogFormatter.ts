@@ -5,7 +5,7 @@ import {
   formatMessage,
 } from '../utilities';
 import { type Chalk } from 'chalk';
-import { deleteProperty } from 'dot-prop';
+import dotProp from 'dot-prop';
 import { type Message } from 'roarr';
 import split from 'split2';
 
@@ -42,7 +42,7 @@ export const createLogFormatter = (configuration: {
     }
 
     for (const path of omit) {
-      deleteProperty(parsedMessage, path);
+      dotProp.delete(parsedMessage, path);
     }
 
     const formattedMessage = formatMessage(parsedMessage, {
