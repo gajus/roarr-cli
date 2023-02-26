@@ -9,8 +9,8 @@ export type RoarrConfigurationType = {
 
 export type LogFilterConfigurationType = {
   readonly chalk: Chalk;
-  readonly filterExpression: string | null;
-  readonly filterFunction: FilterFunction | null;
+  readonly filterExpression?: string | null;
+  readonly filterFunction?: FilterFunction | null;
   readonly head: number;
   readonly lag: number;
 };
