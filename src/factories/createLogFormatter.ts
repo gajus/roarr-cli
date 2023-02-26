@@ -12,11 +12,11 @@ import split from 'split2';
 export const createLogFormatter = (configuration: {
   readonly chalk: Chalk;
   readonly includeDate: boolean;
-  readonly omit: readonly string[];
+  readonly omitPaths: readonly string[];
   readonly outputFormat: 'json' | 'pretty';
   readonly useColors: boolean;
 }) => {
-  const { chalk, includeDate, useColors, omit } = configuration;
+  const { chalk, includeDate, useColors, omitPaths } = configuration;
 
   let lastMessageTime: number;
 
@@ -41,8 +41,8 @@ export const createLogFormatter = (configuration: {
       );
     }
 
-    for (const path of omit) {
-      dotProp.delete(parsedMessage, path);
+    for (const omitPath of omitPaths) {
+      dotProp.delete(parsedMessage, omitPath);
     }
 
     const formattedMessage = formatMessage(parsedMessage, {

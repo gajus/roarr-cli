@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 
 import {
   createLogFilter,
@@ -60,7 +61,6 @@ const argv = yargs
       type: 'string',
     },
     omit: {
-      default: [] as readonly string[],
       description:
         'Omit properties from the Roarr message, e.g. --omit context.version',
       type: 'array',
@@ -105,6 +105,8 @@ let filterFunction: FilterFunction | null = null;
 let omitPaths: readonly string[] = [];
 
 if (roarrConfigurationPath) {
+  console.log('[@roarr/cli] loading %s configuration', roarrConfigurationPath);
+
   // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
   const roarrConfiguration: RoarrConfiguration = require(roarrConfigurationPath);
 
@@ -171,7 +173,7 @@ stream = stream.pipe(
   createLogFormatter({
     chalk,
     includeDate: argv['include-date'],
-    omit: argv['omit'] ?? omitPaths,
+    omitPaths: argv['omit'] ? (argv['omit'] as readonly string[]) : omitPaths,
     outputFormat: argv['output-format'],
     useColors: argv['use-colors'],
   }),
