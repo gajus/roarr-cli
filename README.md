@@ -20,15 +20,17 @@ Use `--filter` option to filter Roarr messages, e.g.
 
 ```bash
 $ echo '
-{"context":{"package":"raygun","namespace":"createHttpProxyServer","logLevel":40},"message":"internal SSL Server running on 0.0.0.0:59222","sequence":0,"time":1533310067405,"version":"2.0.0"}
-{"context":{"package":"raygun","namespace":"createHttpProxyServer","logLevel":40},"message":"gracefully shutting down the proxy server","sequence":1,"time":1533310067438,"version":"2.0.0"}
-{"context":{"package":"raygun","namespace":"createOnCloseEventHandler","logLevel":30},"message":"raygun server closed","sequence":2,"time":1533310067439,"version":"2.0.0"}
-{"foo": "bar"}
-{"context":{"package":"raygun","namespace":"createOnCloseEventHandler","logLevel":30},"message":"internal SSL close","sequence":3,"time":1533310067439,"version":"2.0.0"}
-' | roarr --filter 'context.logLevel:>30'
-[2018-08-03T15:27:47.405Z] WARN (40) (@raygun) (#createHttpProxyServer): internal SSL Server running on 0.0.0.0:59222
-[2018-08-03T15:27:47.438Z] WARN (40) (@raygun) (#createHttpProxyServer): gracefully shutting down the proxy server
-{"foo": "bar"}
+{"context":{"program":"foo","package":"bar","namespace":"baz","logLevel":20},"message":"a","sequence":0,"time":1533310067405,"version":"2.0.0"}
+{"context":{"program":"foo","package":"bar","namespace":"baz","logLevel":30},"message":"b","sequence":1,"time":1533310067438,"version":"2.0.0"}
+{"context":{"program":"foo","package":"bar","namespace":"baz","logLevel":40},"message":"c","sequence":2,"time":1533310067439,"version":"2.0.0"}
+{"context":{"program":"foo","package":"bar","namespace":"baz","logLevel":10},"message":"d","sequence":3,"time":1533310067445,"version":"2.0.0"}
+{"context":{"program":"foo","package":"bar","namespace":"baz","logLevel":30},"message":"e","sequence":4,"time":1533310067459,"version":"2.0.0"}
+{"context":{"program":"foo","package":"bar","namespace":"baz","logLevel":40},"message":"f","sequence":5,"time":1533310067473,"version":"2.0.0"}
+' | roarr --filter 'context.logLevel:>20'
+[15:27:47.438]       info  @bar %foo #baz: b
+[15:27:47.439]   1ms warn  @bar %foo #baz: c
+[15:27:47.459]  20ms info  @bar %foo #baz: e
+[15:27:47.473]  14ms warn  @bar %foo #baz: f
 ```
 
 Refer to [`Liqe`](https://github.com/gajus/liqe) documentation for query syntax.
@@ -46,17 +48,24 @@ $ ROARR_LOG=true node index.js | roarr pretty-print
 Provided that the `index.js` program produced an output such as:
 
 ```json
-{"context":{"program":"forward-proxy","namespace":"createHttpProxyServer","logLevel":30},"message":"Internal SSL Server running on localhost:62597","sequence":0,"time":1506803138704,"version":"2.0.0"}
-{"context":{"package":"forward-proxy","namespace":"createRequestProcessor","logLevel":30},"message":"request start -> http://localhost:62595/","sequence":1,"time":1506803138741,"version":"2.0.0"}
-{"context":{"package":"forward-proxy","namespace":"createLogInterceptor","logLevel":20,"headers":{"host":"localhost:62595","connection":"close"}},"message":"received request","sequence":2,"time":1506803138741,"version":"2.0.0"}
-{"context":{"package":"forward-proxy","namespace":"createRequestProcessor","logLevel":30},"message":"request finished <- http://localhost:62595/","sequence":3,"time":1506803138749,"version":"2.0.0"}
-{"context":{"package":"forward-proxy","namespace":"createLogInterceptor","logLevel":30,"method":"GET","requestHeaders":{"host":"localhost:62595","connection":"close"},"responseHeaders":{"date":"Sat, 30 Sep 2017 20:25:38 GMT","connection":"close","content-length":"7","x-forward-proxy-request-id":"2b746d92-1a8b-4f36-b3cc-5bff57dad94d","x-forward-proxy-cache-hit":"false"},"statusCode":200,"url":"http://localhost:62595/"},"message":"response","sequence":4,"time":1506803138755,"version":"2.0.0"}
-{"context":{"package":"forward-proxy","namespace":"createLogInterceptor","logLevel":30,"method":"GET","requestHeaders":{"host":"localhost:62595","connection":"close"},"responseHeaders":{"date":"Sat, 30 Sep 2017 20:25:38 GMT","content-length":"7","x-forward-proxy-request-id":"2b746d92-1a8b-4f36-b3cc-5bff57dad94d","x-forward-proxy-cache-hit":"true"},"statusCode":200,"url":"http://localhost:62595/"},"message":"response","sequence":5,"time":1506803138762,"version":"2.0.0"}
+{"context":{"program":"foo","package":"bar","namespace":"baz","logLevel":20},"message":"a","sequence":0,"time":1533310067405,"version":"2.0.0"}
+{"context":{"program":"foo","package":"bar","namespace":"baz","logLevel":30},"message":"b","sequence":1,"time":1533310067438,"version":"2.0.0"}
+{"context":{"program":"foo","package":"bar","namespace":"baz","logLevel":40},"message":"c","sequence":2,"time":1533310067439,"version":"2.0.0"}
+{"context":{"program":"foo","package":"bar","namespace":"baz","logLevel":10},"message":"d","sequence":3,"time":1533310067445,"version":"2.0.0"}
+{"context":{"program":"foo","package":"bar","namespace":"baz","logLevel":30},"message":"e","sequence":4,"time":1533310067459,"version":"2.0.0"}
+{"context":{"program":"foo","package":"bar","namespace":"baz","logLevel":40},"message":"f","sequence":5,"time":1533310067473,"version":"2.0.0"}
 ```
 
 `roarr` CLI program will format the output to look like this:
 
-![CLI output demo](./.README/cli-output-demo.png)
+```yaml
+[15:27:47.405]       debug @bar %foo #baz: a
+[15:27:47.438]  33ms info  @bar %foo #baz: b
+[15:27:47.439]   1ms warn  @bar %foo #baz: c
+[15:27:47.445]   6ms trace @bar %foo #baz: d
+[15:27:47.459]  14ms info  @bar %foo #baz: e
+[15:27:47.473]  14ms warn  @bar %foo #baz: f
+```
 
 The "pretty" format relies on logs using the context property names suggested in the [conventions](#conventions):
 
