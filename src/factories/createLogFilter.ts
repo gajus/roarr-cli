@@ -4,7 +4,6 @@ import {
   findRoarrMessageLocation,
   formatInvalidInputMessage,
 } from '../utilities';
-import { type LiqeQuery } from 'liqe';
 import { parse, test } from 'liqe';
 import { type Message } from 'roarr';
 import split from 'split2';
@@ -12,8 +11,7 @@ import split from 'split2';
 const createTailingFilter = (
   head: number,
   lag: number,
-  filter: FilterFunction | null,
-  query: LiqeQuery | null,
+  filter: FilterFunction,
 ) => {
   let lastLinePrinterLinesAgo = 0;
   let printNextLines = 0;
@@ -26,7 +24,7 @@ const createTailingFilter = (
 
     let result: string;
 
-    if ((query && test(query, parsedMessage)) || filter?.(parsedMessage)) {
+    if (filter(parsedMessage)) {
       result =
         buffer.slice(-1 * lastLinePrinterLinesAgo - 1, -1).join('\n') +
         '\n' +
@@ -51,13 +49,27 @@ const createTailingFilter = (
 };
 
 export const createLogFilter = (configuration: LogFilterConfigurationType) => {
+  const query = configuration.filterExpression
+    ? parse(configuration.filterExpression)
+    : null;
+
   const filterLog = createTailingFilter(
     configuration.head,
     configuration.lag,
-    configuration.filterFunction ?? null,
-    configuration.filterExpression
-      ? parse(configuration.filterExpression)
-      : null,
+    (message) => {
+      if (
+        configuration.filterFunction &&
+        configuration.filterFunction(message) === false
+      ) {
+        return false;
+      }
+
+      if (query && test(query, message) === false) {
+        return false;
+      }
+
+      return true;
+    },
   );
 
   return split((line) => {
