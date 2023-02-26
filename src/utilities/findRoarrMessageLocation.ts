@@ -1,7 +1,7 @@
 export const findRoarrMessageLocation = (
-  text: string,
+  subject: string,
 ): { end: number; start: number } | null => {
-  const startIndex = text.indexOf('{"context":{');
+  const startIndex = subject.indexOf('{"context":{');
 
   if (startIndex === -1) {
     return null;
@@ -9,7 +9,7 @@ export const findRoarrMessageLocation = (
 
   const END = '"version":"2.0.0"}';
 
-  const endIndex = text.indexOf(END);
+  const endIndex = subject.indexOf(END);
 
   if (endIndex === -1) {
     return null;

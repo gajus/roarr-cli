@@ -1,40 +1,39 @@
-import { type LogFilterConfigurationType } from '../types';
+import { type FilterFunction, type LogFilterConfigurationType } from '../types';
 import {
+  extractRoarrMessage,
   findRoarrMessageLocation,
   formatInvalidInputMessage,
 } from '../utilities';
+import { type LiqeQuery } from 'liqe';
 import { parse, test } from 'liqe';
+import { type Message } from 'roarr';
 import split from 'split2';
 
-export const createLogFilter = (configuration: LogFilterConfigurationType) => {
+const createTailingFilter = (
+  head: number,
+  lag: number,
+  filter: FilterFunction | null,
+  query: LiqeQuery | null,
+) => {
   let lastLinePrinterLinesAgo = 0;
   let printNextLines = 0;
   let buffer: string[] = [];
 
-  const query = configuration.filterExpression
-    ? parse(configuration.filterExpression)
-    : null;
-
-  const filterLog = (line: string) => {
+  return (line: string, parsedMessage: Message) => {
     buffer.push(line);
 
-    buffer = buffer.slice(-1 * configuration.lag - 1);
+    buffer = buffer.slice(-1 * lag - 1);
 
-    const subject = JSON.parse(line);
+    let result: string;
 
-    let result;
-
-    if (
-      (query && test(query, subject)) ||
-      configuration.filterFunction?.(subject)
-    ) {
+    if ((query && test(query, parsedMessage)) || filter?.(parsedMessage)) {
       result =
         buffer.slice(-1 * lastLinePrinterLinesAgo - 1, -1).join('\n') +
         '\n' +
         line.trim();
 
       lastLinePrinterLinesAgo = 0;
-      printNextLines = configuration.head;
+      printNextLines = head;
     } else {
       printNextLines--;
 
@@ -47,18 +46,41 @@ export const createLogFilter = (configuration: LogFilterConfigurationType) => {
       lastLinePrinterLinesAgo++;
     }
 
-    return result ? result.trim() + '\n' : '';
+    return result ? result : null;
   };
+};
+
+export const createLogFilter = (configuration: LogFilterConfigurationType) => {
+  const filterLog = createTailingFilter(
+    configuration.head,
+    configuration.lag,
+    configuration.filterFunction ?? null,
+    configuration.filterExpression
+      ? parse(configuration.filterExpression)
+      : null,
+  );
 
   return split((line) => {
-    if (!findRoarrMessageLocation(line)) {
+    const messageLocation = findRoarrMessageLocation(line);
+
+    if (!messageLocation) {
       return line + '\n';
     }
 
+    const tokens = extractRoarrMessage(line, messageLocation);
+
+    let parsedMessage: Message;
+
     try {
-      return filterLog(line);
+      parsedMessage = JSON.parse(tokens.body);
     } catch (error) {
-      return formatInvalidInputMessage(configuration.chalk, error, line);
+      return (
+        tokens.head +
+        formatInvalidInputMessage(configuration.chalk, error, tokens.body) +
+        tokens.tail
+      );
     }
+
+    return filterLog(line, parsedMessage);
   });
 };

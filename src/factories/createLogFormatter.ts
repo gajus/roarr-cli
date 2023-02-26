@@ -1,9 +1,11 @@
 import { type LogFormatterConfigurationType } from '../types';
 import {
+  extractRoarrMessage,
   findRoarrMessageLocation,
   formatInvalidInputMessage,
   formatMessage,
 } from '../utilities';
+import { type Message } from 'roarr';
 import split from 'split2';
 
 export const createLogFormatter = (
@@ -20,34 +22,29 @@ export const createLogFormatter = (
       return line + '\n';
     }
 
-    const head = line.slice(0, messageLocation.start);
-    const body = line.slice(
-      messageLocation.start,
-      messageLocation.start + messageLocation.end,
-    );
-    const tail = line.slice(messageLocation.end);
+    const tokens = extractRoarrMessage(line, messageLocation);
 
-    let formattedMessage: string;
+    let parsedMessage: Message;
 
     try {
-      const parsedMessage = JSON.parse(body);
-
-      formattedMessage = formatMessage(parsedMessage, {
-        chalk,
-        includeDate,
-        lastMessageTime,
-        useColors,
-      });
-
-      lastMessageTime = parsedMessage.time;
+      parsedMessage = JSON.parse(tokens.body);
     } catch (error) {
-      formattedMessage = formatInvalidInputMessage(chalk, error, body);
+      return (
+        tokens.head +
+        formatInvalidInputMessage(configuration.chalk, error, tokens.body) +
+        tokens.tail
+      );
     }
 
-    if (messageLocation.start === 0) {
-      return formattedMessage;
-    }
+    const formattedMessage = formatMessage(parsedMessage, {
+      chalk,
+      includeDate,
+      lastMessageTime,
+      useColors,
+    });
 
-    return head + formattedMessage + tail;
+    lastMessageTime = parsedMessage.time;
+
+    return tokens.head + formattedMessage + tokens.tail;
   });
 };
