@@ -34,12 +34,6 @@ const argv = yargs
       hidden: true,
       type: 'string',
     },
-    'exclude-alien': {
-      default: false,
-      description:
-        'Excludes messages that cannot be recognized as Roarr log message.',
-      type: 'boolean',
-    },
     filter: {
       description: 'Roarr message Liqe filter expression.',
       type: 'string',
@@ -74,6 +68,12 @@ const argv = yargs
     'output-format': {
       choices: ['pretty', 'json'] as const,
       default: 'pretty' as const,
+    },
+    pure: {
+      default: false,
+      description:
+        'Excludes messages that cannot be recognized as Roarr log message.',
+      type: 'boolean',
     },
     'stream-id': {
       description: 'roarr.io stream ID.',
@@ -143,7 +143,7 @@ let stream = process.stdin.pipe(
     }
 
     if (!findRoarrMessageLocation(line)) {
-      return argv.excludeAlien ? '' : line + '\n';
+      return argv.pure ? '' : line + '\n';
     }
 
     return line + '\n';

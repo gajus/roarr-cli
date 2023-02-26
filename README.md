@@ -1,8 +1,5 @@
 # Roarr
 
-[![Travis build status](http://img.shields.io/travis/gajus/roarr-cli/master.svg?style=flat-square)](https://travis-ci.com/github/gajus/roarr-cli)
-[![Coveralls](https://img.shields.io/coveralls/gajus/roarr-cli.svg?style=flat-square)](https://coveralls.io/github/gajus/roarr-cli)
-[![NPM version](http://img.shields.io/npm/v/@roarr/cli.svg?style=flat-square)](https://www.npmjs.org/package/@roarr/cli)
 [![Canonical Code Style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
 [![Twitter Follow](https://img.shields.io/twitter/follow/kuizinas.svg?style=social&label=Follow)](https://twitter.com/kuizinas)
 
@@ -15,29 +12,6 @@ Roarr CLI program provides ability to filter and pretty-print [Roarr](https://gi
   * [Formatting logs](#formatting-logs)
 * [Roarr configuration file](#roarr-configuration-file)
   * [Supported Roarr configuration file properties](#supported-roarr-configuration-file-properties)
-
-## Usage
-
-```bash
-$ npm install @roarr/cli -g
-$ roarr --help
-Filters and formats Roarr log message.
-
-Options:
-  --version                  Show version number                       [boolean]
-  --api-key                  roarr.io API key.                          [string]
-  --exclude-alien            Excludes messages that cannot be recognized as
-                             Roarr log message.       [boolean] [default: false]
-  --filter                   Roarr message Liqe filter expression.       [string]
-  --head                     When filtering, print a number of lines leading the
-                             match.                        [number] [default: 0]
-  --lag                      When filtering, print a number of lines trailing
-                             the match.                    [number] [default: 0]
-  --output-format                [choices: "pretty", "json"] [default: "pretty"]
-  --use-colors               Toggle use of colors in the output.
-                                                       [boolean] [default: true]
-  --help                     Show help                                 [boolean]
-```
 
 ### Viewing logs in browser
 

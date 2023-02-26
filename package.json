@@ -54,7 +54,7 @@
     "build": "rm -fr ./dist && tsc",
     "dev": "tsc --watch",
     "lint": "eslint ./src && tsc --noEmit",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "version": "1.0.0"
 }
