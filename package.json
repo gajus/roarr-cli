@@ -13,7 +13,7 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "chalk": "^4.0.0",
-    "dot-prop": "^7.2.0",
+    "dot-prop": "^6.0.0",
     "es6-error": "^4.1.1",
     "liqe": "^3.6.0",
     "pretty-ms": "^7.0.0",
