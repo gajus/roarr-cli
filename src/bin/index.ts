@@ -8,7 +8,7 @@ import {
 import {
   type FilterFunction,
   type RemoteStream,
-  type RoarrConfigurationType,
+  type RoarrConfiguration,
 } from '../types';
 import {
   findNearestRoarrConfigurationPath,
@@ -102,13 +102,18 @@ const roarrConfigurationPath =
   findNearestRoarrConfigurationPath('.roarr.js');
 
 let filterFunction: FilterFunction | null = null;
+let omitPaths: readonly string[] = [];
 
 if (roarrConfigurationPath) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
-  const roarrConfiguration: RoarrConfigurationType = require(roarrConfigurationPath);
+  const roarrConfiguration: RoarrConfiguration = require(roarrConfigurationPath);
 
   if (roarrConfiguration?.filter) {
     filterFunction = roarrConfiguration.filter;
+  }
+
+  if (roarrConfiguration?.omit) {
+    omitPaths = roarrConfiguration.omit;
   }
 }
 
@@ -166,7 +171,7 @@ stream = stream.pipe(
   createLogFormatter({
     chalk,
     includeDate: argv['include-date'],
-    omit: argv['omit'],
+    omit: argv['omit'] ?? omitPaths,
     outputFormat: argv['output-format'],
     useColors: argv['use-colors'],
   }),

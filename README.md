@@ -67,6 +67,7 @@ Roarr searches the current working directory for `.roarr.js` (or `.roarr.cjs`) f
 `.roarr.js` is a JavaScript file that exports an object that defines properties used to configure Roarr, e.g.
 
 ```js
+/** @type {import("@roarr/cli").RoarrConfiguration} */
 module.exports = {
   /**
    * Receives Roarr message object and determines if to keep the log.
@@ -74,5 +75,9 @@ module.exports = {
   filter: (message) => {
     return message.context && message.context.logLevel > 20;
   },
+  /**
+   * List of properties (identified using dot notation) to exclude from the log message. 
+   */
+  omit: ['context.namespace']
 };
 ```

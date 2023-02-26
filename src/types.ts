@@ -2,8 +2,9 @@ import { type Message } from 'roarr';
 
 export type FilterFunction = (message: Message) => boolean;
 
-export type RoarrConfigurationType = {
+export type RoarrConfiguration = {
   readonly filter: FilterFunction;
+  readonly omit: readonly string[];
 };
 
 export type RemoteStream = {
