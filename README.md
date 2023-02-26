@@ -6,46 +6,10 @@
 Roarr CLI program provides ability to filter and pretty-print [Roarr](https://github.com/gajus/roarr) logs.
 
 * [Usage](#usage)
-  * [Viewing logs in browser](#viewing-logs-in-browser)
-    * [Identifying Log Source](#identifying-log-source)
   * [Filtering logs](#filtering-logs)
   * [Formatting logs](#formatting-logs)
 * [Roarr configuration file](#roarr-configuration-file)
   * [Supported Roarr configuration file properties](#supported-roarr-configuration-file-properties)
-
-### Viewing logs in browser
-
-Configure `--api-key` to stream logs to https://roarr.io.
-
-```bash
-export ROARR_API_KEY=00000000-0000-0000-0000-000000000000
-```
-
-View logs by opening `https://roarr.io?room=[YOUR API KEY]`.
-
-By default, every time you run `roarr` it will generate a new stream ID and it will appear as a new source in roarr.io. However, you can configure a stable stream ID, e.g.
-
-```bash
-export ROARR_STREAM_ID=00000000-0000-0000-0000-000000000000
-```
-
-#### Identifying Log Source
-
-By default, all `@roarr/cli` agents are assigned a random name.
-
-Agent name is used to identify the source of logs in roarr.io UI.
-
-You can override the random name using environment variables:
-
-```bash
-export ROARR_NAME=roarr-web-app
-```
-
-Additionally, you can assign (comma separated) tags:
-
-```bash
-export ROARR_TAGS=production,roarr-web-app
-```
 
 ### Filtering logs
 
