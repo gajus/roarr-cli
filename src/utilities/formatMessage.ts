@@ -80,12 +80,12 @@ export const formatMessage = (
     }
   }
 
-  if (message.context.package) {
-    formattedMessage += ' @' + String(message.context.package);
-  }
-
   if (message.context.program) {
     formattedMessage += ' %' + String(message.context.program);
+  }
+
+  if (message.context.package) {
+    formattedMessage += ' @' + String(message.context.package);
   }
 
   if (message.context.namespace) {
