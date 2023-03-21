@@ -11,12 +11,17 @@ import split from 'split2';
 
 export const createLogFormatter = (configuration: {
   readonly chalk: Chalk;
-  readonly includeDate: boolean;
-  readonly omitPaths: readonly string[];
+  readonly includeDate?: boolean;
+  readonly omitPaths?: readonly string[];
   readonly outputFormat: 'json' | 'pretty';
-  readonly useColors: boolean;
+  readonly useColors?: boolean;
 }) => {
-  const { chalk, includeDate, useColors, omitPaths } = configuration;
+  const {
+    chalk,
+    includeDate = false,
+    useColors = false,
+    omitPaths = [],
+  } = configuration;
 
   let lastMessageTime: number;
 

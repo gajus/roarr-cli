@@ -115,7 +115,7 @@ export const formatMessage = (
           prettyjson.render(rest, {
             noColor: !useColors,
           }),
-        ) + '\n\n';
+        ) + '\n';
     }
   }
 
