@@ -181,9 +181,21 @@ stream = stream.pipe(
 
 stream.pipe(process.stdout);
 
+let firstSigint = true;
+
 process.on('SIGINT', () => {
-  setTimeout(() => {
-    // eslint-disable-next-line node/no-process-exit
-    process.exit();
-  }, 250);
+  if (firstSigint) {
+    firstSigint = false;
+
+    console.log(
+      '[@roarr/cli] received SIGINT; waiting for the stream to close',
+    );
+
+    return;
+  }
+
+  console.log('[@roarr/cli] received second SIGINT; force exiting');
+
+  // eslint-disable-next-line node/no-process-exit
+  process.exit(1);
 });
