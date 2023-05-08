@@ -6,6 +6,7 @@ import {
   createLogFormatter,
   createRemoteStream,
 } from '../factories';
+import { createSeqForwarder } from '../forwarders';
 import {
   type FilterFunction,
   type RemoteStream,
@@ -74,6 +75,13 @@ const argv = yargs
       description:
         'Excludes messages that cannot be recognized as Roarr log message.',
       type: 'boolean',
+    },
+    'remote-stream-type': {
+      choices: ['seq'] as const,
+    },
+    'remote-stream-url': {
+      description: 'URL of the remote stream.',
+      type: 'string',
     },
     'stream-id': {
       description: 'roarr.io stream ID.',
@@ -156,6 +164,10 @@ let stream = process.stdin.pipe(
     return line + '\n';
   }),
 );
+
+if (argv['remote-stream-type'] === 'seq' && argv['remote-stream-url']) {
+  stream.pipe(createSeqForwarder(argv['remote-stream-url']));
+}
 
 if (argv.filter || filterFunction) {
   stream = stream.pipe(
