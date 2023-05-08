@@ -2,7 +2,6 @@
 
 import { extractRoarrMessage, findRoarrMessageLocation } from '../utilities';
 import { Writable } from 'node:stream';
-import { type Message } from 'roarr';
 import { getLogLevelName } from 'roarr';
 import { Logger } from 'seq-logging';
 
