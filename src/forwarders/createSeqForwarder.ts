@@ -2,6 +2,7 @@
 
 import { extractRoarrMessage, findRoarrMessageLocation } from '../utilities';
 import { Writable } from 'node:stream';
+import { type Message } from 'roarr';
 import { getLogLevelName } from 'roarr';
 import { Logger } from 'seq-logging';
 
@@ -39,7 +40,13 @@ export const createSeqForwarder = (serverUrl: string) => {
 
       const tokens = extractRoarrMessage(line, messageLocation);
 
-      const message = JSON.parse(tokens.body);
+      let message: Message;
+
+      try {
+        message = JSON.parse(tokens.body);
+      } catch {
+        return;
+      }
 
       logger.emit({
         level:
