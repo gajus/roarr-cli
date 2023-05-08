@@ -37,6 +37,8 @@ export const createSeqForwarder = (serverUrl: string) => {
       const messageLocation = findRoarrMessageLocation(line);
 
       if (!messageLocation) {
+        callback();
+
         return;
       }
 
@@ -47,6 +49,8 @@ export const createSeqForwarder = (serverUrl: string) => {
       try {
         message = JSON.parse(tokens.body);
       } catch {
+        callback();
+
         return;
       }
 
