@@ -17,10 +17,12 @@ const logLevelMap = {
 
 export const createSeqForwarder = (serverUrl: string) => {
   const logger = new Logger({
+    maxRetries: 5,
     onError: (error) => {
       // eslint-disable-next-line no-console
-      console.error('Seq Forwarder', error);
+      console.error('[Seq Forwarder Error]', error);
     },
+    retryDelay: 5_000,
     serverUrl,
   });
 
