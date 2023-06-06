@@ -19,8 +19,13 @@ export const createSeqForwarder = (serverUrl: string) => {
   const logger = new Logger({
     maxRetries: 5,
     onError: (error) => {
-      // eslint-disable-next-line no-console
-      console.error('[Seq Forwarder Error]', error);
+      if ('code' in error && error.code === 'ECONNREFUSED') {
+        // eslint-disable-next-line no-console
+        console.warn('[Seq Forwarder Error] cannot connect to Seq server');
+      } else {
+        // eslint-disable-next-line no-console
+        console.error('[Seq Forwarder Error]', error);
+      }
     },
     retryDelay: 5_000,
     serverUrl,
