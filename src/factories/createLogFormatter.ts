@@ -21,6 +21,7 @@ export const createLogFormatter = (configuration: {
     includeDate = false,
     useColors = false,
     omitPaths = [],
+    outputFormat,
   } = configuration;
 
   let lastMessageTime: number;
@@ -50,12 +51,15 @@ export const createLogFormatter = (configuration: {
       dotProp.delete(parsedMessage, omitPath);
     }
 
-    const formattedMessage = formatMessage(parsedMessage, {
-      chalk,
-      includeDate,
-      lastMessageTime,
-      useColors,
-    });
+    const formattedMessage =
+      outputFormat === 'pretty'
+        ? formatMessage(parsedMessage, {
+            chalk,
+            includeDate,
+            lastMessageTime,
+            useColors,
+          })
+        : JSON.stringify(parsedMessage) + '\n';
 
     lastMessageTime = parsedMessage.time;
 
